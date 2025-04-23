@@ -3,12 +3,13 @@ window.onload = function() {
   const movieId = urlParams.get('id');
   const server = urlParams.get('server');
   const type = urlParams.get('type');
+  const episode = urlParams.get('episode'); // Get the episode parameter if available
 
   // Fetch movie/show details using the TMDB API
-  fetchMovieDetails(movieId, server, type);
+  fetchMovieDetails(movieId, server, type, episode);
 };
 
-async function fetchMovieDetails(movieId, server, type) {
+async function fetchMovieDetails(movieId, server, type, episode) {
   const res = await fetch(`https://api.themoviedb.org/3/${type}/${movieId}?api_key=961334ce43e0adcaa714fddec89fcfd9`);
   const data = await res.json();
 
@@ -16,22 +17,31 @@ async function fetchMovieDetails(movieId, server, type) {
   document.getElementById('movie-title').textContent = data.title || data.name;
 
   // Construct the embed URL for the video
-  const embedURL = getEmbedURL(server, type, movieId);
+  const embedURL = getEmbedURL(server, type, movieId, episode);
   document.getElementById('watch-video').src = embedURL;
 
-  // Fetch episode list if the type is TV
+  // If it's a TV show, fetch the episode list
   if (type === 'tv') {
     fetchEpisodes(movieId);
   }
 }
 
-function getEmbedURL(server, type, id) {
+function getEmbedURL(server, type, id, episode = null) {
   let embedURL = "";
 
   if (server === "vidsrc.cc") {
-    embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}`;
+    if (episode) {
+      // Add logic to handle individual episode embed URLs
+      embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}?episode=${episode}`;
+    } else {
+      embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}`;
+    }
   } else if (server === "vidsrc.me") {
-    embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${id}`;
+    if (episode) {
+      embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${id}&episode=${episode}`;
+    } else {
+      embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${id}`;
+    }
   } else if (server === "player.videasy.net") {
     embedURL = `https://player.videasy.net/${type}/${id}`;
   }
