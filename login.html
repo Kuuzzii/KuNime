@@ -2,31 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - KuNime</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="login.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KuNime - Login</title>
+  <link rel="stylesheet" href="signup.css" />
+  <script defer src="login.js"></script>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login to KuNime</h2>
-    
-    <form id="login-form">
-      <div class="input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-      </div>
-
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-
-      <button type="submit" class="login-btn">Login</button>
-      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-    </form>
+  <div class="background">
+    <!-- Movie Posters Animation -->
+    <div class="movies-container">
+      <img class="movie" src="movie1.jpg" alt="movie1" />
+      <img class="movie" src="movie2.jpg" alt="movie2" />
+      <img class="movie" src="movie3.jpg" alt="movie3" />
+    </div>
   </div>
 
-  <script src="login.js"></script>
+  <div class="form-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter password" required />
+
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+  </div>
 </body>
 </html>
