@@ -299,3 +299,35 @@ body {
   margin-top: 20px;
   display: inline-block;
 }
+
+/* Episode List Styling */
+.episode-list {
+  margin-top: 30px;
+  color: #fff;
+}
+
+.episode-item {
+  background-color: #1e1e1e;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.episode-item:hover {
+  background-color: #333;
+}
+
+.episode-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.episode-airdate {
+  font-size: 14px;
+  color: #bbb;
+}
