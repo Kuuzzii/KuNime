@@ -6,11 +6,11 @@
   <title>KuNime - Login</title>
   <link rel="stylesheet" href="signup.css" />
   <script defer src="login.js"></script>
-  <!-- Google API script -->
+
+  <!-- Load Google API -->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-  <button id="google-signin" class="g-signin2" data-onsuccess="onSignIn"></button>
   <div class="background">
     <!-- Movie Posters Animation -->
     <div class="movies-container">
@@ -31,29 +31,10 @@
 
       <button type="submit">Login</button>
     </form>
+
+    <button id="google-signin" class="g-signin2" data-onsuccess="onSignIn"></button>
+
     <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-
-    <!-- Google Sign-In Button -->
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
   </div>
-
-  <script>
-    // Initialize Google API Client
-    gapi.load('auth2', function() {
-      gapi.auth2.init({
-        client_id: '400178594348-hjrn9o9eqhv2jau3jlbkjsa3c3ekmtga.apps.googleusercontent.com'
-      });
-    });
-
-    // This function is called when the user successfully signs in
-    function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      console.log("User signed in: " + profile.getName());
-      
-      // Now you can handle user login, save tokens or redirect
-      var id_token = googleUser.getAuthResponse().id_token;
-      // Send the id_token to your server for verification or other purposes
-    }
-  </script>
 </body>
 </html>
