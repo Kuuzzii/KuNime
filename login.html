@@ -6,6 +6,9 @@
   <title>KuNime - Login</title>
   <link rel="stylesheet" href="login.css" />
   <script defer src="login.js"></script>
+
+  <!-- Load Google API -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
   <div class="background">
@@ -28,6 +31,10 @@
 
       <button type="submit">Login</button>
     </form>
+
+    <!-- Google Sign-In Button -->
+    <button id="google-signin" class="g-signin2" data-onsuccess="onSignIn"></button>
+
     <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
   </div>
 </body>
