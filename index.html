@@ -16,8 +16,20 @@
     </div>
     <div class="nav-right">
       <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
+      <button class="browse-btn" onclick="toggleBrowseMenu()">Browse</button> <!-- Added Browse button -->
     </div>
   </header>
+
+  <!-- Dropdown Menu for Browse -->
+  <div id="browse-menu" class="browse-menu" style="display: none;">
+    <ul>
+      <li><a href="index.html">Movies</a></li>
+      <li><a href="index.html">TV Shows</a></li>
+      <li><a href="index.html">Anime</a></li>
+      <li><a href="index.html">4K Movies</a></li>
+      <li><a href="index.html">Channels</a></li>
+    </ul>
+  </div>
 
   <section class="banner" id="banner">
     <div class="overlay">
