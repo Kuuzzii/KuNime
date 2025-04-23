@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - KuNime</title>
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
-  <h2>Login</h2>
-  <form id="login-form">
-    <label for="email">Email: </label><br>
-    <input type="email" id="email" required><br><br>
-    <label for="password">Password: </label><br>
-    <input type="password" id="password" required><br><br>
-    <button type="submit">Login</button>
-  </form>
+  <div class="login-container">
+    <h1>Welcome to KuNime</h1>
+    <p>Please sign in or sign up to enter</p>
 
-  <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    <!-- Login Form -->
+    <div class="form-container" id="login-form">
+      <h2>Login</h2>
+      <form id="login-form" action="login" method="POST">
+        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p class="switch">Don't have an account? <span id="to-signup">Sign Up</span></p>
+      </form>
+    </div>
 
-  <script>
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    <!-- Signup Form -->
+    <div class="form-container" id="signup-form">
+      <h2>Sign Up</h2>
+      <form id="signup-form" action="signup" method="POST">
+        <input type="email" id="email-signup" name="email" placeholder="Email" required />
+        <input type="password" id="password-signup" name="password" placeholder="Password" required />
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required />
+        <button type="submit">Sign Up</button>
+        <p class="switch">Already have an account? <span id="to-login">Login</span></p>
+      </form>
+    </div>
+  </div>
 
-      // Send this data to your backend to authenticate the user
-      fetch('http://your-backend-api.com/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      }).then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            localStorage.setItem('user', JSON.stringify(data.user)); // Save user data in local storage
-            window.location.href = 'index.html'; // Redirect to the home page after successful login
-          } else {
-            alert('Invalid credentials!');
-          }
-        });
-    });
-  </script>
+  <script src="login.js"></script>
 </body>
 </html>
