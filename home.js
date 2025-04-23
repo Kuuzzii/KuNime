@@ -1,7 +1,23 @@
+// Firebase initialization
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Global variable to hold the currently selected movie/show
 const API_KEY = '961334ce43e0adcaa714fddec89fcfd9';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMG_URL = 'https://image.tmdb.org/t/p/original';
-let currentItem; // Global variable to hold the currently selected movie/show
+let currentItem;
 
 // This function will be called when the Play button is clicked
 function goToMoviePage() {
@@ -17,6 +33,73 @@ function goToMoviePage() {
   // Redirect to the watch page with the correct query parameters
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
 }
+
+// Firebase Authentication - Sign-up function
+function signUp() {
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      const user = userCredential.user;
+      alert('Sign-up successful! Welcome, ' + user.email);
+      showUserInfo(user);
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert('Error: ' + errorMessage);
+    });
+}
+
+// Firebase Authentication - Log-in function
+function logIn() {
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      const user = userCredential.user;
+      alert('Login successful! Welcome back, ' + user.email);
+      showUserInfo(user);
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert('Error: ' + errorMessage);
+    });
+}
+
+// Display user info after login
+function showUserInfo(user) {
+  document.getElementById('sign-up-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('user-info').style.display = 'block';
+  document.getElementById('user-name').textContent = user.email;
+}
+
+// Firebase Authentication - Log-out function
+function logOut() {
+  auth.signOut()
+    .then(() => {
+      alert('Logged out successfully');
+      document.getElementById('user-info').style.display = 'none';
+      document.getElementById('sign-up-form').style.display = 'block';
+      document.getElementById('login-form').style.display = 'block';
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert('Error: ' + errorMessage);
+    });
+}
+
+// Detect user's auth state
+auth.onAuthStateChanged(user => {
+  if (user) {
+    showUserInfo(user);
+  }
+});
 
 // Fetch Trending Movies/TV Shows/Anime
 async function fetchTrending(type) {
