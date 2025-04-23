@@ -304,6 +304,8 @@ body {
 .episode-list {
   margin-top: 30px;
   color: #fff;
+  list-style-type: none;
+  padding: 0;
 }
 
 .episode-item {
@@ -330,4 +332,13 @@ body {
 .episode-airdate {
   font-size: 14px;
   color: #bbb;
+}
+
+.episode-link {
+  color: #ff4757;
+  text-decoration: none;
+}
+
+.episode-link:hover {
+  text-decoration: underline;
 }
