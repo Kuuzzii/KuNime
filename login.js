@@ -1,19 +1,19 @@
-// Handle the login form submission
-document.getElementById('login-form').addEventListener('submit', function(event) {
+document.getElementById("login-form").addEventListener("submit", function(event) {
   event.preventDefault(); // Prevent form submission
 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  // Get the user data from the form
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-  // Normally, you would authenticate with the server here
-  // For this example, we are simulating a successful login
-  if (username === 'user' && password === 'password123') {
-    // Save the user's login status in localStorage
-    localStorage.setItem('userLoggedIn', 'true');
-    
-    // Redirect to the homepage after successful login
-    window.location.href = 'index.html';
+  // Retrieve the stored username and password from localStorage
+  const storedUsername = localStorage.getItem("username");
+  const storedPassword = localStorage.getItem("password");
+
+  // Check if entered credentials match the stored credentials
+  if (username === storedUsername && password === storedPassword) {
+    alert("Login successful!");
+    window.location.href = "index.html"; // Redirect to the main page after successful login
   } else {
-    alert('Invalid username or password!');
+    alert("Invalid username or password. Please try again.");
   }
 });
