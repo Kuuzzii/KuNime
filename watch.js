@@ -20,7 +20,7 @@ async function fetchMovieDetails(movieId, server, type, episode) {
   const embedURL = getEmbedURL(server, type, movieId, episode);
   document.getElementById('watch-video').src = embedURL;
 
-  // If it's a TV show, fetch the episode list
+  // Fetch episode list if the type is TV
   if (type === 'tv') {
     fetchEpisodes(movieId);
   }
