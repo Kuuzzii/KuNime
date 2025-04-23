@@ -2,37 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - KuNime</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="login.css">
 </head>
 <body>
   <div class="login-container">
-    <h1>Welcome to KuNime</h1>
-    <p>Please sign in or sign up to enter</p>
+    <h2>Login to KuNime</h2>
+    
+    <form id="login-form">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
 
-    <!-- Login Form -->
-    <div class="form-container" id="login-form">
-      <h2>Login</h2>
-      <form id="login-form" action="login" method="POST">
-        <input type="email" id="email" name="email" placeholder="Email" required />
-        <input type="password" id="password" name="password" placeholder="Password" required />
-        <button type="submit">Login</button>
-        <p class="switch">Don't have an account? <span id="to-signup">Sign Up</span></p>
-      </form>
-    </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
 
-    <!-- Signup Form -->
-    <div class="form-container" id="signup-form">
-      <h2>Sign Up</h2>
-      <form id="signup-form" action="signup" method="POST">
-        <input type="email" id="email-signup" name="email" placeholder="Email" required />
-        <input type="password" id="password-signup" name="password" placeholder="Password" required />
-        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required />
-        <button type="submit">Sign Up</button>
-        <p class="switch">Already have an account? <span id="to-login">Login</span></p>
-      </form>
-    </div>
+      <button type="submit" class="login-btn">Login</button>
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </form>
   </div>
 
   <script src="login.js"></script>
