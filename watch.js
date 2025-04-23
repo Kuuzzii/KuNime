@@ -19,7 +19,7 @@ async function fetchMovieDetails(movieId, server, type) {
   const embedURL = getEmbedURL(server, type, movieId);
   document.getElementById('watch-video').src = embedURL;
 
-  // If it's a TV show, fetch the episode list
+  // Fetch episode list if the type is TV
   if (type === 'tv') {
     fetchEpisodes(movieId);
   }
@@ -58,6 +58,7 @@ function displayEpisodes(episodes) {
     episodeItem.innerHTML = `
       <span class="episode-title">${episode.name}</span>
       <span class="episode-airdate">(${episode.air_date})</span>
+      <a class="episode-link" href="watch?id=${episode.id}&server=vidsrc.cc&type=tv&episode=${episode.season_number}-${episode.episode_number}">Watch Now</a>
     `;
     episodeContainer.appendChild(episodeItem);
   });
