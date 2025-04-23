@@ -1,8 +1,19 @@
 const API_KEY = '961334ce43e0adcaa714fddec89fcfd9';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMG_URL = 'https://image.tmdb.org/t/p/original';
-let currentItem;
+let currentItem; // Global variable to hold the currently selected movie/show
 
+// This function will be called when the Play button is clicked
+function goToMoviePage() {
+  const movieId = currentItem.id; // Get the movie/show id from the currentItem
+  const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
+  const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
+
+  // Redirect to the watch page with the correct query parameters
+  window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+}
+
+// Fetch Trending Movies/TV Shows/Anime
 async function fetchTrending(type) {
   const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
   const data = await res.json();
@@ -25,12 +36,20 @@ async function fetchTrendingAnime() {
   return allResults;
 }
 
+// Function to display the banner (featured movie/show) and set currentItem
 function displayBanner(item) {
   document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
   document.getElementById('banner-title').textContent = item.title || item.name;
-  document.getElementById('banner-description').textContent = item.overview || 'No description available.'; // Automated description
+  document.getElementById('banner-description').textContent = item.overview || 'No description available.';
+
+  // Set the currentItem to this movie/show
+  currentItem = item;
+
+  // Display the Play button (it might be hidden initially)
+  document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
 }
 
+// Display the list of movies, TV shows, or anime
 function displayList(items, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
@@ -43,6 +62,7 @@ function displayList(items, containerId) {
   });
 }
 
+// Function to show details of a selected movie/show
 function showDetails(item) {
   currentItem = item;
   document.getElementById('modal-title').textContent = item.title || item.name;
@@ -53,6 +73,7 @@ function showDetails(item) {
   document.getElementById('modal').style.display = 'flex';
 }
 
+// Change the server for video embedding (e.g., Vidsrc, Videasy)
 function changeServer() {
   const server = document.getElementById('server').value;
   const type = currentItem.media_type === "movie" ? "movie" : "tv";
@@ -69,21 +90,25 @@ function changeServer() {
   document.getElementById('modal-video').src = embedURL;
 }
 
+// Close the modal
 function closeModal() {
   document.getElementById('modal').style.display = 'none';
   document.getElementById('modal-video').src = '';
 }
 
+// Open the search modal
 function openSearchModal() {
   document.getElementById('search-modal').style.display = 'flex';
   document.getElementById('search-input').focus();
 }
 
+// Close the search modal
 function closeSearchModal() {
   document.getElementById('search-modal').style.display = 'none';
   document.getElementById('search-results').innerHTML = '';
 }
 
+// Search TMDB for movies/shows
 async function searchTMDB() {
   const query = document.getElementById('search-input').value;
   if (!query.trim()) {
@@ -109,15 +134,17 @@ async function searchTMDB() {
   });
 }
 
+// Initialize and fetch trending data (movies, TV shows, anime)
 async function init() {
   const movies = await fetchTrending('movie');
   const tvShows = await fetchTrending('tv');
   const anime = await fetchTrendingAnime();
 
-  displayBanner(movies[Math.floor(Math.random() * movies.length)]);
+  displayBanner(movies[Math.floor(Math.random() * movies.length)]); // Display random featured movie/show
   displayList(movies, 'movies-list');
   displayList(tvShows, 'tvshows-list');
   displayList(anime, 'anime-list');
 }
 
+// Run the init function when the page loads
 init();
