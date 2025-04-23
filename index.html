@@ -9,25 +9,28 @@
   <script defer src="home.js"></script>
 </head>
 <body>
+  <!-- Navbar with Logo -->
   <header class="navbar">
     <div class="logo">
       <img src="kunime-logo.png" alt="KuNime Logo" />
       <span>KuNime</span>
     </div>
     <div class="nav-right">
+      <!-- Search Button -->
       <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
     </div>
   </header>
 
   <!-- Search Bar Above Featured Video -->
   <section class="search-bar-container">
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." />
+    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
     <button onclick="searchTMDB()">Search</button>
   </section>
 
-  <!-- Add this below the search bar to show results -->
+  <!-- Display search results below the search bar -->
   <div id="search-results"></div>
 
+  <!-- Banner Section -->
   <section class="banner" id="banner">
     <div class="overlay">
       <h1 id="banner-title"></h1>
@@ -37,22 +40,26 @@
   </section>
 
   <main class="container">
+    <!-- Trending Movies Section -->
     <section class="row">
       <h2>🎬 Trending Movies</h2>
       <div class="list" id="movies-list"></div>
     </section>
 
+    <!-- Trending TV Shows Section -->
     <section class="row">
       <h2>📺 Trending TV Shows</h2>
       <div class="list" id="tvshows-list"></div>
     </section>
 
+    <!-- Trending Anime Section -->
     <section class="row">
       <h2>🎌 Trending Anime</h2>
       <div class="list" id="anime-list"></div>
     </section>
   </main>
 
+  <!-- Modal for Movie Details -->
   <div class="modal" id="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
@@ -78,12 +85,7 @@
     </div>
   </div>
 
-  <div class="search-modal" id="search-modal">
-    <span class="close" onclick="closeSearchModal()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
-    <div class="results" id="search-results"></div>
-  </div>
-
+  <!-- Footer Section -->
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
     <div class="footer-links">
@@ -92,5 +94,68 @@
       <a href="#">Contact</a>
     </div>
   </footer>
+
+  <script>
+    // Check if the user is logged in, if not redirect to login page
+    window.onload = function() {
+      const userLoggedIn = localStorage.getItem('userLoggedIn');
+      if (!userLoggedIn) {
+        window.location.href = 'login.html'; // Redirect to login page
+      }
+    }
+
+    // Function to open the search modal and perform search
+    function openSearchModal() {
+      document.getElementById('search-modal').style.display = 'flex';
+      document.getElementById('search-input').focus();
+    }
+
+    // Function to close the search modal
+    function closeSearchModal() {
+      document.getElementById('search-modal').style.display = 'none';
+      document.getElementById('search-results').innerHTML = '';
+    }
+
+    // Search movies/tv shows using the TMDB API
+    async function searchTMDB() {
+      const query = document.getElementById('search-input').value;
+      const resultsContainer = document.getElementById('search-results');
+
+      if (!query.trim()) {
+        resultsContainer.innerHTML = '';
+        return;
+      }
+
+      const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=961334ce43e0adcaa714fddec89fcfd9&query=${query}`);
+      const data = await res.json();
+
+      // Clear previous search results
+      resultsContainer.innerHTML = '';
+
+      // Show new search results
+      data.results.forEach(item => {
+        if (!item.poster_path) return;
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+        img.alt = item.title || item.name;
+
+        // When an image is clicked, redirect to its detailed page
+        img.onclick = () => {
+          window.location.href = `watch.html?id=${item.id}&server=vidsrc.cc&type=${item.media_type}`;
+        };
+
+        resultsContainer.appendChild(img);
+      });
+    }
+
+    // Function to navigate to the play page (watch movie)
+    function goToMoviePage() {
+      const movieId = currentItem.id;
+      const type = currentItem.media_type === "movie" ? "movie" : "tv";
+      const server = 'vidsrc.cc'; // Default to 'vidsrc.cc'
+
+      window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+    }
+  </script>
 </body>
 </html>
