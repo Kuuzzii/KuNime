@@ -86,24 +86,6 @@ body {
   background-color: #e0394f; /* Darker red on hover */
 }
 
-/* Back to Home Button Styling */
-.back-btn {
-  color: #ff4757;
-  text-decoration: none;
-  font-size: 20px; /* Make the font size bigger */
-  margin-top: 20px;
-  display: inline-block;
-  padding: 10px 20px; /* Add padding to make the button bigger */
-  border: 2px solid #ff4757; /* Add border */
-  border-radius: 5px; /* Optional: rounded corners */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-}
-
-.back-btn:hover {
-  background-color: #ff4757; /* Change background color on hover */
-  color: white; /* Change text color on hover */
-}
-
 /* Container */
 .container {
   padding: 30px 20px;
