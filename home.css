@@ -44,6 +44,45 @@ body {
   cursor: pointer;
 }
 
+/* Search Bar Above Featured Video */
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: #111;
+  margin-top: 20px;
+}
+
+.search-bar-container input {
+  width: 60%;
+  padding: 12px;
+  border: 1px solid #ff4757;
+  border-radius: 25px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+}
+
+.search-bar-container input::placeholder {
+  color: #aaa;
+}
+
+.search-bar-container button {
+  padding: 12px;
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar-container button:hover {
+  background-color: #e0394f;
+}
+
 /* Banner */
 .banner {
   height: 50vh;
@@ -283,24 +322,4 @@ body {
 
 .footer-links a:hover {
   text-decoration: underline;
-}
-
-/* Updated Back to Home Button */
-.back-btn {
-  color: #ff4757;
-  text-decoration: none;
-  font-size: 22px;  /* Increased the font size */
-  margin-top: 20px;
-  display: inline-block;
-  padding: 15px 30px;  /* Increased padding for larger size */
-  border: 3px solid #ff4757; /* Red border */
-  border-radius: 8px; /* Optional: rounded corners */
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
-  font-weight: bold;  /* Make the text bold */
-}
-
-.back-btn:hover {
-  background-color: #ff4757; /* Change background color on hover */
-  color: white; /* Change text color on hover */
-  border-color: white; /* Change border color to white on hover */
 }
