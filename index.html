@@ -19,12 +19,11 @@
     </div>
   </header>
 
-  <!-- Banner Section -->
   <section class="banner" id="banner">
     <div class="overlay">
       <h1 id="banner-title"></h1>
       <p id="banner-description"></p> <!-- This is where the description will be placed -->
-      <button class="play-btn" onclick="goToMoviePage()">Play</button> <!-- Updated Play Button -->
+      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button> <!-- Updated Play Button -->
     </div>
   </section>
 
@@ -84,5 +83,19 @@
       <a href="#">Contact</a>
     </div>
   </footer>
+
+  <script>
+    function goToMoviePage() {
+      const movieId = currentItem.id; // Get the movie/show id from the currentItem
+      const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
+      const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
+
+      // Hide the Play button before navigation
+      document.getElementById('play-btn').style.display = 'none';
+
+      // Redirect to the watch page with the correct query parameters
+      window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+    }
+  </script>
 </body>
 </html>
