@@ -7,6 +7,8 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="home.css">
   <script defer src="home.js"></script>
+  <!-- Google Platform Library -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
   <!-- Navbar with Logo -->
@@ -29,6 +31,11 @@
 
   <!-- Display search results below the search bar -->
   <div id="search-results"></div>
+
+  <!-- Google Sign-In Button -->
+  <section id="google-signin">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  </section>
 
   <!-- Banner Section -->
   <section class="banner" id="banner">
@@ -96,12 +103,24 @@
   </footer>
 
   <script>
-    // Check if the user is logged in, if not redirect to login page
-    window.onload = function() {
-      const userLoggedIn = localStorage.getItem('userLoggedIn');
-      if (!userLoggedIn) {
-        window.location.href = 'login.html'; // Redirect to login page
-      }
+    // Google Sign-In Success Function
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      var id_token = googleUser.getAuthResponse().id_token;
+
+      // Save user data and token (you may choose to send this to the server for validation)
+      console.log("Google User Signed In");
+      console.log("Name: " + profile.getName());
+      console.log("Email: " + profile.getEmail());
+      console.log("ID Token: " + id_token);
+
+      // Save user information to localStorage (for the session)
+      localStorage.setItem('userLoggedIn', 'true');
+      localStorage.setItem('username', profile.getName());
+      localStorage.setItem('email', profile.getEmail());
+
+      // Redirect or process the logged-in user
+      window.location.href = "index.html"; // Redirect to home page or user dashboard
     }
 
     // Function to open the search modal and perform search
@@ -155,6 +174,14 @@
       const server = 'vidsrc.cc'; // Default to 'vidsrc.cc'
 
       window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+    }
+
+    // Check if the user is logged in, if not redirect to login page
+    window.onload = function() {
+      const userLoggedIn = localStorage.getItem('userLoggedIn');
+      if (!userLoggedIn) {
+        window.location.href = 'login.html'; // Redirect to login page
+      }
     }
   </script>
 </body>
