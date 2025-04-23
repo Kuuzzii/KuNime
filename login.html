@@ -6,6 +6,8 @@
   <title>KuNime - Login</title>
   <link rel="stylesheet" href="signup.css" />
   <script defer src="login.js"></script>
+  <!-- Google Platform Library -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
   <div class="background">
@@ -19,7 +21,12 @@
 
   <div class="form-container">
     <h2>Login</h2>
-    <form id="login-form">
+    
+    <!-- Google Sign-In Button -->
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    
+    <!-- Local Login Form -->
+    <form id="login-form" onsubmit="handleLogin(event)">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" placeholder="Enter username" required />
 
@@ -28,7 +35,40 @@
 
       <button type="submit">Login</button>
     </form>
+
     <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
   </div>
+
+  <!-- Login Success Handling -->
+  <script>
+    // Google Sign-In Success Function
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      var id_token = googleUser.getAuthResponse().id_token;
+
+      // Save user data and token (you may choose to send this to the server for validation)
+      console.log("Google User Signed In");
+      console.log("Name: " + profile.getName());
+      console.log("Email: " + profile.getEmail());
+      console.log("ID Token: " + id_token);
+
+      // Redirect or process the logged-in user
+      window.location.href = "index.html"; // Redirect to home page or user dashboard
+    }
+
+    // Local Login Form Handling
+    function handleLogin(event) {
+      event.preventDefault();
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      
+      // Here you can implement login logic for local credentials (e.g., verify with a backend server)
+      console.log("Username: " + username);
+      console.log("Password: " + password);
+
+      // Redirect to homepage upon successful login
+      window.location.href = "index.html"; // Redirect to home page or user dashboard
+    }
+  </script>
 </body>
 </html>
