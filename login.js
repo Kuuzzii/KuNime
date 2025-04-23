@@ -1,7 +1,7 @@
 // Google Sign-In Integration
 gapi.load('auth2', function() {
   gapi.auth2.init({
-    client_id: '400178594348-hjrn9o9eqhv2jau3jlbkjsa3c3ekmtga.apps.googleusercontent.com' // Use your actual Google Client ID
+    client_id: 'YOUR_GOOGLE_CLIENT_ID' // Replace with your actual Google Client ID
   });
 });
 
@@ -14,11 +14,14 @@ function onSignIn(googleUser) {
   localStorage.setItem('username', profile.getName());
   localStorage.setItem('email', profile.getEmail());
 
+  // Set login status to true to maintain session
+  localStorage.setItem('isLoggedIn', 'true');
+
   // Redirect to the home page after successful login
   window.location.href = "index.html"; // Redirect to the home page after successful login
 }
 
-// Form-based login validation (for manual login)
+// Form-based login validation
 document.getElementById("login-form").addEventListener("submit", function(event) {
   event.preventDefault(); // Prevent form submission
 
@@ -33,8 +36,18 @@ document.getElementById("login-form").addEventListener("submit", function(event)
   // Check if entered credentials match the stored credentials
   if (username === storedUsername && password === storedPassword) {
     alert("Login successful!");
+    localStorage.setItem('isLoggedIn', 'true'); // Mark user as logged in
     window.location.href = "index.html"; // Redirect to the main page after successful login
   } else {
     alert("Invalid username or password. Please try again.");
   }
 });
+
+// Check if the user is logged in on page load
+window.onload = function() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  
+  if (isLoggedIn === 'true') {
+    window.location.href = 'index.html'; // Redirect to home page if logged in
+  }
+};
