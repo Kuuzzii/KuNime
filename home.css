@@ -93,7 +93,8 @@ body {
 }
 
 #search-results img {
-  width: 150px; /* Adjust width to match movie poster size */
+  width: 150px; /* Match the size of movie poster images */
+  height: 225px; /* Make sure the height matches for better consistency */
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -103,7 +104,6 @@ body {
   transform: scale(1.08);
   box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
 }
-
 /* Banner */
 .banner {
   height: 50vh;
