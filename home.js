@@ -5,7 +5,14 @@ let currentItem; // Global variable to hold the currently selected movie/show
 
 // This function will be called when the Play button is clicked
 function goToMoviePage() {
-  const movieId = currentItem.id; // Get the movie/show id from the currentItem
+  // Hide the play button
+  document.getElementById('play-btn').style.display = 'none';
+
+  // Optionally, show the video after play button is clicked
+  document.getElementById('watch-video').style.display = 'block'; // Now the video iframe will be visible
+
+  // Get the movie/show id from the currentItem
+  const movieId = currentItem.id;
   const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
   const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
 
