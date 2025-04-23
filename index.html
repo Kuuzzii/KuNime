@@ -19,12 +19,11 @@
     </div>
   </header>
 
-  <!-- Banner Section -->
   <section class="banner" id="banner">
     <div class="overlay">
       <h1 id="banner-title"></h1>
-      <p id="banner-description"></p> <!-- Description will appear here -->
-      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button> <!-- Play button -->
+      <p id="banner-description"></p>
+      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button> <!-- Play button to go to the movie -->
     </div>
   </section>
 
@@ -84,24 +83,5 @@
       <a href="#">Contact</a>
     </div>
   </footer>
-
-  <script>
-    function goToMoviePage() {
-      // Hide the Play button and description
-      document.getElementById('play-btn').style.display = 'none';
-      document.getElementById('banner-description').style.display = 'none'; // Hide the description
-
-      // Optionally, show the video after play button is clicked (this might already be hidden)
-      document.getElementById('watch-video').style.display = 'block'; // Now the video iframe will be visible
-
-      // Get the movie/show id from the currentItem
-      const movieId = currentItem.id;
-      const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
-      const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
-
-      // Redirect to the watch page with the correct query parameters
-      window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
-    }
-  </script>
 </body>
 </html>
