@@ -108,3 +108,18 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Customize Google Sign-In button */
+#g-signin2 {
+  background-color: #333 !important; /* Set the background to black */
+  color: white !important; /* Set the text color to white */
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%; /* Make it full width */
+  font-size: 16px;
+}
+
+#g-signin2:hover {
+  background-color: #222 !important; /* Darker shade on hover */
+}
+
