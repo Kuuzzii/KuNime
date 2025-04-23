@@ -104,6 +104,30 @@ body {
   transform: scale(1.08);
   box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
 }
+
+/* Back to Home Button Styling */
+.back-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #111;
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  border: 2px solid #ff4757; /* Red border */
+  border-radius: 8px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #ff4757; /* Red background on hover */
+  transform: scale(1.05); /* Slightly increase the button size on hover */
+}
+
+.back-btn:active {
+  background-color: #e0394f; /* Darker red when clicked */
+}
+
 /* Banner */
 .banner {
   height: 50vh;
