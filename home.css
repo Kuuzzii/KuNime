@@ -190,6 +190,11 @@ body {
   border-radius: 10px;
 }
 
+/* Initially hide the video iframe */
+#watch-video {
+  display: none;
+}
+
 /* Close Button */
 .close {
   position: absolute;
