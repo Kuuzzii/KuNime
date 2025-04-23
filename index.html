@@ -6,8 +6,6 @@
   <title>KuNime</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="home.css">
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js"></script>
   <script defer src="home.js"></script>
 </head>
 <body>
@@ -18,33 +16,8 @@
     </div>
     <div class="nav-right">
       <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
-      <!-- Profile icon button -->
-      <button class="profile-btn" onclick="toggleLoginModal()">
-        <i class="fas fa-user"></i> <!-- Person icon -->
-      </button>
     </div>
   </header>
-
-  <!-- Login/Signup Modal -->
-  <div id="auth-modal" class="auth-modal">
-    <div class="auth-modal-content">
-      <span class="close" onclick="closeLoginModal()">&times;</span>
-      <div id="auth-form">
-        <h3 id="auth-header">Login</h3>
-        <form id="login-form">
-          <input type="email" id="login-email" placeholder="Email" required />
-          <input type="password" id="login-password" placeholder="Password" required />
-          <button type="button" onclick="logIn()">Login</button>
-        </form>
-        <form id="signup-form" style="display:none;">
-          <input type="email" id="signup-email" placeholder="Email" required />
-          <input type="password" id="signup-password" placeholder="Password" required />
-          <button type="button" onclick="signUp()">Sign Up</button>
-        </form>
-        <button id="toggle-form-btn" onclick="toggleAuthForm()">Don't have an account? Sign up</button>
-      </div>
-    </div>
-  </div>
 
   <section class="banner" id="banner">
     <div class="overlay">
@@ -71,127 +44,199 @@
     </section>
   </main>
 
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modal-image" src="" alt="Poster" />
+        <div class="modal-text">
+          <h2 id="modal-title"></h2>
+          <div class="stars" id="modal-rating"></div>
+          <p id="modal-description"></p>
+          <div class="server-selector">
+            <label for="server">Server:</label>
+            <select id="server" onchange="changeServer()">
+              <option value="vidsrc.cc">Vidsrc.cc</option>
+              <option value="vidsrc.me">Vidsrc.me</option>
+              <option value="player.videasy.net">Player.Videasy.net</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="video-wrapper">
+        <iframe id="modal-video" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Disclaimer</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
   </footer>
 
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDzzvQfCB87RSgt654Vt0Zzx3-hz2kmwbA",
-      authDomain: "kuuzzi-96589.firebaseapp.com",
-      projectId: "kuuzzi-96589",
-      storageBucket: "kuuzzi-96589.firebasestorage.app",
-      messagingSenderId: "647877490795",
-      appId: "1:647877490795:web:fd7dfb7316bc42e55a592e",
-      measurementId: "G-1CJS32400R"
-    };
+    const API_KEY = '961334ce43e0adcaa714fddec89fcfd9';
+    const BASE_URL = 'https://api.themoviedb.org/3';
+    const IMG_URL = 'https://image.tmdb.org/t/p/original';
+    let currentItem; // Global variable to hold the currently selected movie/show
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    // This function will be called when the Play button is clicked
+    function goToMoviePage() {
+      document.getElementById('play-btn').style.display = 'none';
+      document.getElementById('banner-description').style.display = 'none';
 
-    // Sign-up function
-    function signUp() {
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
+      const movieId = currentItem.id;
+      const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
+      const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
 
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          const user = userCredential.user;
-          alert('Sign-up successful! Welcome, ' + user.email);
-          showUserInfo(user);
-        })
-        .catch(error => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert('Error: ' + errorMessage);
-        });
+      window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
     }
 
-    // Log-in function
-    function logIn() {
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          const user = userCredential.user;
-          alert('Login successful! Welcome back, ' + user.email);
-          showUserInfo(user);
-        })
-        .catch(error => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert('Error: ' + errorMessage);
-        });
+    // Fetch Trending Movies/TV Shows/Anime
+    async function fetchTrending(type) {
+      const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
+      const data = await res.json();
+      return data.results;
     }
 
-    // Display user information after successful login
-    function showUserInfo(user) {
-      document.getElementById('sign-up-form').style.display = 'none';
-      document.getElementById('login-form').style.display = 'none';
-      document.getElementById('user-info').style.display = 'block';
-      document.getElementById('user-name').textContent = user.email;
-    }
+    async function fetchTrendingAnime() {
+      let allResults = [];
 
-    // Log-out function
-    function logOut() {
-      auth.signOut()
-        .then(() => {
-          alert('Logged out successfully');
-          document.getElementById('user-info').style.display = 'none';
-          document.getElementById('sign-up-form').style.display = 'block';
-          document.getElementById('login-form').style.display = 'block';
-        })
-        .catch(error => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert('Error: ' + errorMessage);
-        });
-    }
-
-    // Firebase Auth State change (detects user session)
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        showUserInfo(user);
-      } else {
-        document.getElementById('sign-up-form').style.display = 'block';
-        document.getElementById('login-form').style.display = 'block';
+      // Fetch from multiple pages to get more anime (max 3 pages for demo)
+      for (let page = 1; page <= 3; page++) {
+        const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
+        const data = await res.json();
+        const filtered = data.results.filter(item =>
+          item.original_language === 'ja' && item.genre_ids.includes(16)
+        );
+        allResults = allResults.concat(filtered);
       }
-    });
 
-    // Open login modal
-    function toggleLoginModal() {
-      const modal = document.getElementById('auth-modal');
-      modal.style.display = 'flex';
+      return allResults;
     }
 
-    // Close login modal
-    function closeLoginModal() {
-      const modal = document.getElementById('auth-modal');
-      modal.style.display = 'none';
+    // Function to display the banner (featured movie/show) and set currentItem
+    function displayBanner(item) {
+      document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
+      document.getElementById('banner-title').textContent = item.title || item.name;
+      document.getElementById('banner-description').textContent = item.overview || 'No description available.';
+
+      // Set the currentItem to this movie/show
+      currentItem = item;
+
+      // Display the Play button (it might be hidden initially)
+      document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
     }
 
-    // Switch between login and signup forms
-    function toggleAuthForm() {
-      const signupForm = document.getElementById('signup-form');
-      const loginForm = document.getElementById('login-form');
-      const authHeader = document.getElementById('auth-header');
-      const toggleBtn = document.getElementById('toggle-form-btn');
+    // Display the list of movies, TV shows, or anime
+    function displayList(items, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach(item => {
+        const img = document.createElement('img');
+        img.src = `${IMG_URL}${item.poster_path}`;
+        img.alt = item.title || item.name;
+        img.onclick = () => showDetails(item);
+        container.appendChild(img);
+      });
+    }
 
-      if (signupForm.style.display === 'none') {
-        signupForm.style.display = 'block';
-        loginForm.style.display = 'none';
-        authHeader.textContent = 'Sign Up';
-        toggleBtn.textContent = 'Already have an account? Login';
-      } else {
-        signupForm.style.display = 'none';
-        loginForm.style.display = 'block';
-        authHeader.textContent = 'Login';
-        toggleBtn.textContent = 'Don\'t have an account? Sign up';
+    // Function to show details of a selected movie/show
+    function showDetails(item) {
+      currentItem = item;
+      document.getElementById('modal-title').textContent = item.title || item.name;
+      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
+      document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
+      document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+      changeServer();
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    // Change the server for video embedding (e.g., Vidsrc, Videasy)
+    function changeServer() {
+      const server = document.getElementById('server').value;
+      const type = currentItem.media_type === "movie" ? "movie" : "tv";
+      let embedURL = "";
+
+      if (server === "vidsrc.cc") {
+        embedURL = `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
+      } else if (server === "vidsrc.me") {
+        embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
+      } else if (server === "player.videasy.net") {
+        embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
       }
+
+      document.getElementById('modal-video').src = embedURL;
     }
+
+    // Close the modal
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('modal-video').src = '';
+    }
+
+    // Open the search modal
+    function openSearchModal() {
+      document.getElementById('search-modal').style.display = 'flex';
+      document.getElementById('search-input').focus();
+    }
+
+    // Close the search modal
+    function closeSearchModal() {
+      document.getElementById('search-modal').style.display = 'none';
+      document.getElementById('search-results').innerHTML = '';
+    }
+
+    // Search TMDB for movies/shows
+    async function searchTMDB() {
+      const query = document.getElementById('search-input').value;
+      if (!query.trim()) {
+        document.getElementById('search-results').innerHTML = '';
+        return;
+      }
+
+      const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`);
+      const data = await res.json();
+
+      const container = document.getElementById('search-results');
+      container.innerHTML = '';
+      data.results.forEach(item => {
+        if (!item.poster_path) return;
+        const img = document.createElement('img');
+        img.src = `${IMG_URL}${item.poster_path}`;
+        img.alt = item.title || item.name;
+        img.onclick = () => {
+          closeSearchModal();
+          showDetails(item);
+        };
+        container.appendChild(img);
+      });
+    }
+
+    // Initialize and fetch trending data (movies, TV shows, anime)
+    async function init() {
+      const movies = await fetchTrending('movie');
+      const tvShows = await fetchTrending('tv');
+      const anime = await fetchTrendingAnime();
+
+      displayBanner(movies[Math.floor(Math.random() * movies.length)]); // Display random featured movie/show
+      displayList(movies, 'movies-list');
+      displayList(tvShows, 'tvshows-list');
+      displayList(anime, 'anime-list');
+    }
+
+    // Run the init function when the page loads
+    init();
   </script>
 </body>
 </html>
