@@ -66,4 +66,36 @@
       let allResults = [];
       for (let page = 1; page <= 3; page++) {
         const res = await fetch(`https://api.themoviedb.org/3/trending/tv/week?api_key=961334ce43e0adcaa714fddec89fcfd9&page=${page}`);
-        const data
+        const data = await res.json();
+        const filtered = data.results.filter(item =>
+          item.original_language === 'ja' && item.genre_ids.includes(16)
+        );
+        allResults = allResults.concat(filtered);
+      }
+      return allResults;
+    }
+
+    function displayList(items, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach(item => {
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+        img.alt = item.title || item.name;
+        img.onclick = () => showDetails(item);
+        container.appendChild(img);
+      });
+    }
+
+    function showDetails(item) {
+      currentItem = item;
+      document.getElementById('modal-title').textContent = item.title || item.name;
+      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
+      document.getElementById('modal-image').src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+      document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+      changeServer();
+      document.getElementById('modal').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
