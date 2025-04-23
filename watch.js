@@ -16,6 +16,10 @@ async function fetchMovieDetails(movieId, server, type, episode) {
   // Set the movie/show title
   document.getElementById('movie-title').textContent = data.title || data.name;
 
+  // Set the description (or overview)
+  const description = data.overview || "No description available.";
+  document.getElementById('movie-description').textContent = description;
+
   // Construct the embed URL for the video
   const embedURL = getEmbedURL(server, type, movieId, episode);
   document.getElementById('watch-video').src = embedURL;
