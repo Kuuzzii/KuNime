@@ -139,26 +139,6 @@ async function searchTMDB() {
   });
 }
 
-// Toggle the visibility of the Browse menu
-function toggleBrowseMenu() {
-  const menu = document.getElementById('browse-menu');
-  if (menu.style.display === 'block') {
-    menu.style.display = 'none';
-  } else {
-    menu.style.display = 'block';
-  }
-}
-
-// Close the Browse menu if clicked outside
-window.onclick = function(event) {
-  if (!event.target.matches('.browse-btn') && !event.target.matches('#browse-menu') && !event.target.matches('.browse-menu ul') ) {
-    const dropdown = document.getElementById("browse-menu");
-    if (dropdown.style.display === "block") {
-      dropdown.style.display = "none";
-    }
-  }
-}
-
 // Initialize and fetch trending data (movies, TV shows, anime)
 async function init() {
   const movies = await fetchTrending('movie');
