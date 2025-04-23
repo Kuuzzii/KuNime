@@ -20,16 +20,19 @@
   </header>
 
   <!-- Search Bar Above Featured Video -->
-  <div class="search-bar-container">
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()">
+  <section class="search-bar-container">
+    <input type="text" id="search-input" placeholder="Search for movies or shows..." />
     <button onclick="searchTMDB()">Search</button>
-  </div>
+  </section>
+
+  <!-- Add this below the search bar to show results -->
+  <div id="search-results"></div>
 
   <section class="banner" id="banner">
     <div class="overlay">
       <h1 id="banner-title"></h1>
       <p id="banner-description"></p>
-      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button>
+      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button> <!-- Play button to go to the movie -->
     </div>
   </section>
 
