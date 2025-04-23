@@ -20,15 +20,6 @@
     </div>
   </header>
 
-  <!-- Browse Menu -->
-  <div id="browse-menu" class="browse-menu" style="display: none;">
-    <ul>
-      <li><a href="movies.html">Movies</a></li>
-      <li><a href="tvshows.html">TV Shows</a></li>
-      <li><a href="anime.html">Anime</a></li>
-    </ul>
-  </div>
-
   <a href="index.html" class="back-btn">← Back to Home</a>
 
   <!-- Movies Section -->
@@ -49,17 +40,18 @@
   </footer>
 
   <script>
+    // Fetch Trending Movies Data when page loads
     window.onload = function() {
-      fetchCategoryData('movie'); // Fetch movies data
+      fetchCategoryData('movie'); // Fetch Movies data
     };
 
     async function fetchCategoryData(category) {
       let data = [];
       if (category === 'movie') {
-        data = await fetchTrending('movie');
+        data = await fetchTrending('movie'); // Fetch movie-specific data
       }
 
-      displayList(data, 'movies-list');
+      displayList(data, 'movies-list'); // Display the data in the container
     }
 
     async function fetchTrending(type) {
@@ -68,26 +60,24 @@
       return data.results;
     }
 
+    // Display list of items (movies)
     function displayList(items, containerId) {
       const container = document.getElementById(containerId);
-      container.innerHTML = '';
+      container.innerHTML = ''; // Clear any existing content
+
       items.forEach(item => {
         const img = document.createElement('img');
         img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
         img.alt = item.title || item.name;
-        img.onclick = () => showDetails(item);
-        container.appendChild(img);
+        img.onclick = () => showDetails(item); // Open modal with details on click
+        container.appendChild(img); // Append to container
       });
     }
 
+    // Show details in the modal
     function showDetails(item) {
-      currentItem = item;
-      document.getElementById('modal-title').textContent = item.title || item.name;
-      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
-      document.getElementById('modal-image').src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
-      document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
-      changeServer();
-      document.getElementById('modal').style.display = 'flex';
+      // Your modal display code here
+      alert(item.title);  // Just a simple alert for now to show movie title
     }
   </script>
 </body>
