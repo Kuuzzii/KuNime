@@ -5,10 +5,11 @@ let currentItem; // Global variable to hold the currently selected movie/show
 
 // This function will be called when the Play button is clicked
 function goToMoviePage() {
-  // Hide the play button
+  // Hide the play button and description
   document.getElementById('play-btn').style.display = 'none';
+  document.getElementById('banner-description').style.display = 'none'; // Hide description
 
-  // Optionally, show the video after the play button is clicked
+  // Optionally, show the video after the play button is clicked (this might already be hidden)
   document.getElementById('watch-video').style.display = 'block'; // Now the video iframe will be visible
 
   // Get the movie/show id from the currentItem
