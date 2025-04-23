@@ -83,6 +83,27 @@ body {
   background-color: #e0394f;
 }
 
+/* Search Results */
+#search-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#search-results img {
+  width: 150px; /* Adjust width to match movie poster size */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+#search-results img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
+}
+
 /* Banner */
 .banner {
   height: 50vh;
