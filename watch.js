@@ -18,6 +18,11 @@ async function fetchMovieDetails(movieId, server, type) {
   // Construct the embed URL for the video
   const embedURL = getEmbedURL(server, type, movieId);
   document.getElementById('watch-video').src = embedURL;
+
+  // If it's a TV show, fetch the episode list
+  if (type === 'tv') {
+    fetchEpisodes(movieId);
+  }
 }
 
 function getEmbedURL(server, type, id) {
@@ -32,4 +37,31 @@ function getEmbedURL(server, type, id) {
   }
 
   return embedURL;
+}
+
+// Fetch episodes of the TV show
+async function fetchEpisodes(tvShowId) {
+  const res = await fetch(`https://api.themoviedb.org/3/tv/${tvShowId}/season/1?api_key=961334ce43e0adcaa714fddec89fcfd9`);
+  const data = await res.json();
+  const episodeList = data.episodes;
+  displayEpisodes(episodeList);
+}
+
+// Display the episode list below the video player
+function displayEpisodes(episodes) {
+  const episodeContainer = document.createElement('div');
+  episodeContainer.classList.add('episode-list');
+
+  episodes.forEach((episode) => {
+    const episodeItem = document.createElement('div');
+    episodeItem.classList.add('episode-item');
+    episodeItem.innerHTML = `
+      <span class="episode-title">${episode.name}</span>
+      <span class="episode-airdate">(${episode.air_date})</span>
+    `;
+    episodeContainer.appendChild(episodeItem);
+  });
+
+  // Append the episode list to the page
+  document.querySelector('.watch-container').appendChild(episodeContainer);
 }
