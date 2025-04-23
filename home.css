@@ -262,3 +262,31 @@ body {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+/* Watch Page Styling */
+.watch-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.watch-container h1 {
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  margin-top: 20px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
