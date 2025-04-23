@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TV Shows - KuNime</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="home.css">
+  <script defer src="home.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="kunime-logo.png" alt="KuNime Logo" />
+      <span>KuNime</span>
+    </div>
+    <div class="nav-right">
+      <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
+      <button class="browse-btn" onclick="toggleBrowseMenu()">Browse</button>
+    </div>
+  </header>
+
+  <!-- Browse Menu -->
+  <div id="browse-menu" class="browse-menu" style="display: none;">
+    <ul>
+      <li><a href="movies.html">Movies</a></li>
+      <li><a href="tvshows.html">TV Shows</a></li>
+      <li><a href="anime.html">Anime</a></li>
+    </ul>
+  </div>
+
+  <a href="index.html" class="back-btn">← Back to Home</a>
+
+  <!-- TV Shows Section -->
+  <main class="container">
+    <section class="row">
+      <h2>📺 TV Shows</h2>
+      <div class="list" id="tvshows-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 KuNime. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Disclaimer</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    window.onload = function() {
+      fetchCategoryData('tv'); // Fetch TV Shows data
+    };
+
+    async function fetchCategoryData(category) {
+      let data = [];
+      if (category === 'tv') {
+        data = await fetchTrending('tv');
+      }
+
+      displayList(data, 'tvshows-list');
+    }
+
+    async function fetchTrending(type) {
+      const res = await fetch(`https://api.themoviedb.org/3/trending/${type}/week?api_key=961334ce43e0adcaa714fddec89fcfd9`);
+      const data = await res.json();
+      return data.results;
+    }
+
+    function displayList(items, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach(item => {
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+        img.alt = item.title || item.name;
+        img.onclick = () => showDetails(item);
+        container.appendChild(img);
+      });
+    }
+
+    function showDetails(item) {
+      currentItem = item;
+      document.getElementById('modal-title').textContent = item.title || item.name;
+      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
+      document.getElementById('modal-image').src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+      document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+      changeServer();
+      document.getElementById('modal').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
