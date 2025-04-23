@@ -157,3 +157,13 @@ init();
 
 // Attach search functionality to input field
 document.getElementById('search-input').addEventListener('input', searchTMDB);
+
+// Check if user is logged in
+window.onload = function() {
+  const username = localStorage.getItem('username');
+  if (!username) {
+    window.location.href = 'login.html'; // Redirect if user is not logged in
+  } else {
+    document.getElementById('welcome-message').innerText = `Welcome, ${username}`;
+  }
+}
