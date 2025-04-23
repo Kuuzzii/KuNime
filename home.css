@@ -290,3 +290,12 @@ body {
   height: 100%;
   border-radius: 10px;
 }
+
+/* Back to Home Button Styling */
+.back-btn {
+  color: #ff4757;
+  text-decoration: none;
+  font-size: 18px;
+  margin-top: 20px;
+  display: inline-block;
+}
