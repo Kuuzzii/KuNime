@@ -16,9 +16,10 @@ async function fetchMovieDetails(movieId, server, type, episode) {
   // Set the movie/show title
   document.getElementById('movie-title').textContent = data.title || data.name;
 
-  // Set the description (or overview)
-  const description = data.overview || "No description available.";
-  document.getElementById('movie-description').textContent = description;
+  // Set the description (overview)
+  const description = data.overview || "No description available.";  // Default description if not available
+  document.getElementById('banner-title').textContent = data.title || data.name;  // Featured title
+  document.getElementById('banner-description').textContent = description;  // Featured description
 
   // Construct the embed URL for the video
   const embedURL = getEmbedURL(server, type, movieId, episode);
@@ -28,7 +29,6 @@ async function fetchMovieDetails(movieId, server, type, episode) {
 function getEmbedURL(server, type, id, episode = null) {
   let embedURL = "";
 
-  // Add logic to handle episodes
   if (server === "vidsrc.cc") {
     if (episode) {
       embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}?episode=${episode}`; // Handle episode parameter
