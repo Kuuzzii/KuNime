@@ -21,16 +21,13 @@ let currentItem;
 
 // This function will be called when the Play button is clicked
 function goToMoviePage() {
-  // Hide the play button and description
   document.getElementById('play-btn').style.display = 'none';
-  document.getElementById('banner-description').style.display = 'none'; // Hide description
+  document.getElementById('banner-description').style.display = 'none';
 
-  // Get the movie/show id from the currentItem
   const movieId = currentItem.id;
   const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
-  const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
+  const server = 'vidsrc.cc';
 
-  // Redirect to the watch page with the correct query parameters
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
 }
 
@@ -43,10 +40,9 @@ function signUp() {
     .then(userCredential => {
       const user = userCredential.user;
       alert('Sign-up successful! Welcome, ' + user.email);
-      showUserInfo(user);
+      closeLoginModal();
     })
     .catch(error => {
-      const errorCode = error.code;
       const errorMessage = error.message;
       alert('Error: ' + errorMessage);
     });
@@ -61,10 +57,9 @@ function logIn() {
     .then(userCredential => {
       const user = userCredential.user;
       alert('Login successful! Welcome back, ' + user.email);
-      showUserInfo(user);
+      closeLoginModal();
     })
     .catch(error => {
-      const errorCode = error.code;
       const errorMessage = error.message;
       alert('Error: ' + errorMessage);
     });
