@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KuNime</title>
-  <link rel="icon" href="Faviconn.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="home.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script defer src="home.js"></script>
 </head>
 <body>
@@ -22,9 +21,9 @@
 
   <section class="banner" id="banner">
     <div class="overlay">
-      <h1 id="banner-title">Featured Show</h1>
-      <p>This is where a brief description of the movie or show will go.</p>
-      <button class="play-btn">Play</button>
+      <h1 id="banner-title"></h1>
+      <p id="banner-description">This is where a brief description of the movie or show will go.</p>
+      <button id="play-btn">Play</button>
     </div>
   </section>
 
@@ -44,6 +43,37 @@
       <div class="list" id="anime-list"></div>
     </section>
   </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modal-image" src="" alt="Poster" />
+        <div class="modal-text">
+          <h2 id="modal-title"></h2>
+          <div class="stars" id="modal-rating"></div>
+          <p id="modal-description"></p>
+          <div class="server-selector">
+            <label for="server">Server:</label>
+            <select id="server" onchange="changeServer()">
+              <option value="vidsrc.cc">Vidsrc.cc</option>
+              <option value="vidsrc.me">Vidsrc.me</option>
+              <option value="player.videasy.net">Player.Videasy.net</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="video-wrapper">
+        <iframe id="modal-video" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
 
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
