@@ -1,16 +1,19 @@
-// Handle the signup form submission
-document.getElementById('signup-form').addEventListener('submit', function(event) {
+document.getElementById("signup-form").addEventListener("submit", function(event) {
   event.preventDefault(); // Prevent form submission
 
-  const newUsername = document.getElementById('new-username').value;
-  const newPassword = document.getElementById('new-password').value;
+  // Get the user data from the form
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-  // Normally, you'd store the user details in a database here
-  // For now, we simulate a successful signup by storing it in localStorage
+  // Check if username and password are provided
+  if (username && password) {
+    // Save the user credentials in localStorage
+    localStorage.setItem("username", username);
+    localStorage.setItem("password", password);
 
-  localStorage.setItem('userLoggedIn', 'true'); // Automatically log in the user
-  localStorage.setItem('username', newUsername); // Store the username
-
-  // Redirect to the homepage after signup
-  window.location.href = 'index.html';
+    alert("Account created successfully!");
+    window.location.href = "login.html"; // Redirect to the login page after signup
+  } else {
+    alert("Please enter both username and password.");
+  }
 });
