@@ -5,6 +5,10 @@ let currentItem; // Global variable to hold the currently selected movie/show
 
 // This function will be called when the Play button is clicked
 function goToMoviePage() {
+  // Hide the play button and description
+  document.getElementById('play-btn').style.display = 'none';
+  document.getElementById('banner-description').style.display = 'none'; // Hide description
+
   // Get the movie/show id from the currentItem
   const movieId = currentItem.id;
   const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
