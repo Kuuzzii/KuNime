@@ -154,3 +154,6 @@ async function init() {
 
 // Run the init function when the page loads
 init();
+
+// Attach search functionality to input field
+document.getElementById('search-input').addEventListener('input', searchTMDB);
