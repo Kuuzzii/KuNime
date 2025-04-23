@@ -16,7 +16,6 @@
     </div>
     <div class="nav-right">
       <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
-      <button class="browse-btn" onclick="toggleBrowseMenu()">Browse</button>
     </div>
   </header>
 
@@ -50,14 +49,25 @@
       if (category === 'movie') {
         data = await fetchTrending('movie'); // Fetch movie-specific data
       }
+      
+      if (data.length === 0) {
+        console.log('No data fetched!');
+      } else {
+        console.log('Fetched data:', data);
+      }
 
       displayList(data, 'movies-list'); // Display the data in the container
     }
 
     async function fetchTrending(type) {
-      const res = await fetch(`https://api.themoviedb.org/3/trending/${type}/week?api_key=961334ce43e0adcaa714fddec89fcfd9`);
-      const data = await res.json();
-      return data.results;
+      try {
+        const res = await fetch(`https://api.themoviedb.org/3/trending/${type}/week?api_key=961334ce43e0adcaa714fddec89fcfd9`);
+        const data = await res.json();
+        console.log('Fetched movies data:', data.results);
+        return data.results;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
 
     // Display list of items (movies)
