@@ -16,140 +16,72 @@
     </div>
     <div class="nav-right">
       <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
-      <button class="browse-btn" onclick="toggleBrowseMenu()">Browse</button> <!-- Added Browse button -->
     </div>
   </header>
 
-  <!-- Dropdown Menu for Browse -->
-  <div id="browse-menu" class="browse-menu" style="display: none;">
-    <ul>
-      <li><a href="index.html?category=movie">Movies</a></li>
-      <li><a href="index.html?category=tv">TV Shows</a></li>
-      <li><a href="index.html?category=anime">Anime</a></li>
-    </ul>
-  </div>
-
-  <!-- Back to Home Button -->
-  <a href="index.html" class="back-btn">← Back to Home</a>
-
-  <!-- Banner Section -->
   <section class="banner" id="banner">
     <div class="overlay">
       <h1 id="banner-title"></h1>
-      <p id="banner-description"></p> <!-- This is where the description will be placed -->
+      <p id="banner-description"></p>
       <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button>
     </div>
   </section>
 
-  <section class="watch-container">
-    <h1 id="movie-title"></h1>
-    <div class="video-wrapper">
-      <iframe id="watch-video" src="" frameborder="0" allowfullscreen></iframe>
+  <main class="container">
+    <section class="row">
+      <h2>🎬 Trending Movies</h2>
+      <div class="list" id="movies-list"></div>
+    </section>
+
+    <section class="row">
+      <h2>📺 Trending TV Shows</h2>
+      <div class="list" id="tvshows-list"></div>
+    </section>
+
+    <section class="row">
+      <h2>🎌 Trending Anime</h2>
+      <div class="list" id="anime-list"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modal-image" src="" alt="Poster" />
+        <div class="modal-text">
+          <h2 id="modal-title"></h2>
+          <div class="stars" id="modal-rating"></div>
+          <p id="modal-description"></p>
+          <div class="server-selector">
+            <label for="server">Server:</label>
+            <select id="server" onchange="changeServer()">
+              <option value="vidsrc.cc">Vidsrc.cc</option>
+              <option value="vidsrc.me">Vidsrc.me</option>
+              <option value="player.videasy.net">Player.Videasy.net</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="video-wrapper">
+        <iframe id="modal-video" frameborder="0" allowfullscreen></iframe>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
 
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Disclaimer</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
   </footer>
-
-  <script>
-    window.onload = function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const category = urlParams.get('category'); // Get the selected category (movie, tv, anime)
-
-      if (category) {
-        fetchCategoryData(category); // Fetch data based on the selected category
-      } else {
-        fetchTrending('movie'); // Default to movies if no category is specified
-      }
-    };
-
-    // Fetch data based on the selected category
-    async function fetchCategoryData(category) {
-      let data = [];
-      if (category === 'movie') {
-        data = await fetchTrending('movie');
-      } else if (category === 'tv') {
-        data = await fetchTrending('tv');
-      } else if (category === 'anime') {
-        data = await fetchTrendingAnime();
-      }
-
-      // Display the content based on the category
-      displayList(data, category + '-list');
-    }
-
-    // Fetch Trending Movies/TV Shows/Anime
-    async function fetchTrending(type) {
-      const res = await fetch(`https://api.themoviedb.org/3/trending/${type}/week?api_key=961334ce43e0adcaa714fddec89fcfd9`);
-      const data = await res.json();
-      return data.results;
-    }
-
-    async function fetchTrendingAnime() {
-      let allResults = [];
-      for (let page = 1; page <= 3; page++) {
-        const res = await fetch(`https://api.themoviedb.org/3/trending/tv/week?api_key=961334ce43e0adcaa714fddec89fcfd9&page=${page}`);
-        const data = await res.json();
-        const filtered = data.results.filter(item =>
-          item.original_language === 'ja' && item.genre_ids.includes(16)
-        );
-        allResults = allResults.concat(filtered);
-      }
-      return allResults;
-    }
-
-    // Display the list of movies, TV shows, or anime
-    function displayList(items, containerId) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
-      items.forEach(item => {
-        const img = document.createElement('img');
-        img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
-        img.alt = item.title || item.name;
-        img.onclick = () => showDetails(item);
-        container.appendChild(img);
-      });
-    }
-
-    // Function to show details of a selected movie/show
-    function showDetails(item) {
-      currentItem = item;
-      document.getElementById('modal-title').textContent = item.title || item.name;
-      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
-      document.getElementById('modal-image').src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
-      document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
-      changeServer();
-      document.getElementById('modal').style.display = 'flex';
-    }
-
-    // Change the server for video embedding (e.g., Vidsrc, Videasy)
-    function changeServer() {
-      const server = document.getElementById('server').value;
-      const type = currentItem.media_type === "movie" ? "movie" : "tv";
-      let embedURL = "";
-
-      if (server === "vidsrc.cc") {
-        embedURL = `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
-      } else if (server === "vidsrc.me") {
-        embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
-      } else if (server === "player.videasy.net") {
-        embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
-      }
-
-      document.getElementById('modal-video').src = embedURL;
-    }
-
-    // Back to Home functionality
-    document.querySelector('.back-btn').addEventListener('click', function() {
-      window.location.href = 'index.html'; // Return to the homepage
-    });
-
-    // Toggle Browse menu visibility
-    function toggleBrowseMenu() {
-      const menu = document.getElementById('browse-menu');
-      menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
-    }
-  </script>
 </body>
 </html>
