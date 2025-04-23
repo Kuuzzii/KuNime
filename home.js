@@ -28,6 +28,7 @@ async function fetchTrendingAnime() {
 function displayBanner(item) {
   document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
   document.getElementById('banner-title').textContent = item.title || item.name;
+  document.getElementById('banner-description').textContent = item.overview || 'No description available.'; // Automated description
 }
 
 function displayList(items, containerId) {
@@ -44,13 +45,12 @@ function displayList(items, containerId) {
 
 function showDetails(item) {
   currentItem = item;
-
-  // Construct the URL with the movie/show ID and server choice
-  const server = document.getElementById('server').value;
-  const type = currentItem.media_type === "movie" ? "movie" : "tv";
-
-  // Redirect to watch.html with query params for ID, server, and type
-  window.location.href = `watch.html?id=${currentItem.id}&server=${server}&type=${type}`;
+  document.getElementById('modal-title').textContent = item.title || item.name;
+  document.getElementById('modal-description').textContent = item.overview || 'No description available.';
+  document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
+  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+  changeServer();
+  document.getElementById('modal').style.display = 'flex';
 }
 
 function changeServer() {
