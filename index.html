@@ -18,8 +18,33 @@
     </div>
     <div class="nav-right">
       <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
+      <!-- Profile icon button -->
+      <button class="profile-btn" onclick="toggleLoginModal()">
+        <i class="fas fa-user"></i> <!-- Person icon -->
+      </button>
     </div>
   </header>
+
+  <!-- Login/Signup Modal -->
+  <div id="auth-modal" class="auth-modal">
+    <div class="auth-modal-content">
+      <span class="close" onclick="closeLoginModal()">&times;</span>
+      <div id="auth-form">
+        <h3 id="auth-header">Login</h3>
+        <form id="login-form">
+          <input type="email" id="login-email" placeholder="Email" required />
+          <input type="password" id="login-password" placeholder="Password" required />
+          <button type="button" onclick="logIn()">Login</button>
+        </form>
+        <form id="signup-form" style="display:none;">
+          <input type="email" id="signup-email" placeholder="Email" required />
+          <input type="password" id="signup-password" placeholder="Password" required />
+          <button type="button" onclick="signUp()">Sign Up</button>
+        </form>
+        <button id="toggle-form-btn" onclick="toggleAuthForm()">Don't have an account? Sign up</button>
+      </div>
+    </div>
+  </div>
 
   <section class="banner" id="banner">
     <div class="overlay">
@@ -46,66 +71,8 @@
     </section>
   </main>
 
-  <!-- Sign-up Form -->
-  <div id="sign-up-form">
-    <h2>Sign Up</h2>
-    <input type="email" id="signup-email" placeholder="Enter your email" required>
-    <input type="password" id="signup-password" placeholder="Enter your password" required>
-    <button onclick="signUp()">Sign Up</button>
-  </div>
-
-  <!-- Log-in Form -->
-  <div id="login-form">
-    <h2>Log In</h2>
-    <input type="email" id="login-email" placeholder="Enter your email" required>
-    <input type="password" id="login-password" placeholder="Enter your password" required>
-    <button onclick="logIn()">Log In</button>
-  </div>
-
-  <!-- User Info Section (After Login) -->
-  <div id="user-info" style="display: none;">
-    <h3>Welcome, <span id="user-name"></span></h3>
-    <button onclick="logOut()">Log Out</button>
-  </div>
-
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="modal-body">
-        <img id="modal-image" src="" alt="Poster" />
-        <div class="modal-text">
-          <h2 id="modal-title"></h2>
-          <div class="stars" id="modal-rating"></div>
-          <p id="modal-description"></p>
-          <div class="server-selector">
-            <label for="server">Server:</label>
-            <select id="server" onchange="changeServer()">
-              <option value="vidsrc.cc">Vidsrc.cc</option>
-              <option value="vidsrc.me">Vidsrc.me</option>
-              <option value="player.videasy.net">Player.Videasy.net</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="video-wrapper">
-        <iframe id="modal-video" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
-  <div class="search-modal" id="search-modal">
-    <span class="close" onclick="closeSearchModal()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
-    <div class="results" id="search-results"></div>
-  </div>
-
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="#">Disclaimer</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </div>
   </footer>
 
   <script>
@@ -193,6 +160,38 @@
         document.getElementById('login-form').style.display = 'block';
       }
     });
+
+    // Open login modal
+    function toggleLoginModal() {
+      const modal = document.getElementById('auth-modal');
+      modal.style.display = 'flex';
+    }
+
+    // Close login modal
+    function closeLoginModal() {
+      const modal = document.getElementById('auth-modal');
+      modal.style.display = 'none';
+    }
+
+    // Switch between login and signup forms
+    function toggleAuthForm() {
+      const signupForm = document.getElementById('signup-form');
+      const loginForm = document.getElementById('login-form');
+      const authHeader = document.getElementById('auth-header');
+      const toggleBtn = document.getElementById('toggle-form-btn');
+
+      if (signupForm.style.display === 'none') {
+        signupForm.style.display = 'block';
+        loginForm.style.display = 'none';
+        authHeader.textContent = 'Sign Up';
+        toggleBtn.textContent = 'Already have an account? Login';
+      } else {
+        signupForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        authHeader.textContent = 'Login';
+        toggleBtn.textContent = 'Don\'t have an account? Sign up';
+      }
+    }
   </script>
 </body>
 </html>
