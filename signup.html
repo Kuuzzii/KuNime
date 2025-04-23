@@ -2,31 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up - KuNime</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="signup.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KuNime - Sign Up</title>
+  <link rel="stylesheet" href="signup.css" />
+  <script defer src="signup.js"></script>
 </head>
 <body>
-  <div class="signup-container">
-    <h2>Create an Account</h2>
-    
-    <form id="signup-form">
-      <div class="input-group">
-        <label for="new-username">Username</label>
-        <input type="text" id="new-username" name="new-username" required>
-      </div>
-
-      <div class="input-group">
-        <label for="new-password">Password</label>
-        <input type="password" id="new-password" name="new-password" required>
-      </div>
-
-      <button type="submit" class="signup-btn">Sign Up</button>
-      <p>Already have an account? <a href="login.html">Login</a></p>
-    </form>
+  <div class="background">
+    <!-- Movie Posters Animation -->
+    <div class="movies-container">
+      <img class="movie" src="movie1.jpg" alt="movie1" />
+      <img class="movie" src="movie2.jpg" alt="movie2" />
+      <img class="movie" src="movie3.jpg" alt="movie3" />
+    </div>
   </div>
 
-  <script src="signup.js"></script>
+  <div class="form-container">
+    <h2>Create an Account</h2>
+    <form id="signup-form">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter password" required />
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
 </body>
 </html>
