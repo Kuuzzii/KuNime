@@ -1,233 +1,346 @@
-// Firebase initialization
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
-};
-
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// Global variable to hold the currently selected movie/show
-const API_KEY = '961334ce43e0adcaa714fddec89fcfd9';
-const BASE_URL = 'https://api.themoviedb.org/3';
-const IMG_URL = 'https://image.tmdb.org/t/p/original';
-let currentItem;
-
-// This function will be called when the Play button is clicked
-function goToMoviePage() {
-  document.getElementById('play-btn').style.display = 'none';
-  document.getElementById('banner-description').style.display = 'none';
-
-  const movieId = currentItem.id;
-  const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
-  const server = 'vidsrc.cc';
-
-  window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-// Firebase Authentication - Sign-up function
-function signUp() {
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      const user = userCredential.user;
-      alert('Sign-up successful! Welcome, ' + user.email);
-      closeLoginModal();
-    })
-    .catch(error => {
-      const errorMessage = error.message;
-      alert('Error: ' + errorMessage);
-    });
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0d0d0d;
+  color: #f5f5f5;
 }
 
-// Firebase Authentication - Log-in function
-function logIn() {
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      const user = userCredential.user;
-      alert('Login successful! Welcome back, ' + user.email);
-      closeLoginModal();
-    })
-    .catch(error => {
-      const errorMessage = error.message;
-      alert('Error: ' + errorMessage);
-    });
+/* Navbar */
+.navbar {
+  background: #111;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-// Display user info after login
-function showUserInfo(user) {
-  document.getElementById('sign-up-form').style.display = 'none';
-  document.getElementById('login-form').style.display = 'none';
-  document.getElementById('user-info').style.display = 'block';
-  document.getElementById('user-name').textContent = user.email;
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-// Firebase Authentication - Log-out function
-function logOut() {
-  auth.signOut()
-    .then(() => {
-      alert('Logged out successfully');
-      document.getElementById('user-info').style.display = 'none';
-      document.getElementById('sign-up-form').style.display = 'block';
-      document.getElementById('login-form').style.display = 'block';
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert('Error: ' + errorMessage);
-    });
+.navbar .logo img {
+  height: 40px;
 }
 
-// Detect user's auth state
-auth.onAuthStateChanged(user => {
-  if (user) {
-    showUserInfo(user);
-  }
-});
-
-// Fetch Trending Movies/TV Shows/Anime
-async function fetchTrending(type) {
-  const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
-  const data = await res.json();
-  return data.results;
+.navbar .logo span {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff4757;
 }
 
-async function fetchTrendingAnime() {
-  let allResults = [];
-
-  // Fetch from multiple pages to get more anime (max 3 pages for demo)
-  for (let page = 1; page <= 3; page++) {
-    const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
-    const data = await res.json();
-    const filtered = data.results.filter(item =>
-      item.original_language === 'ja' && item.genre_ids.includes(16)
-    );
-    allResults = allResults.concat(filtered);
-  }
-
-  return allResults;
+/* Button styles for Home and Browse */
+.nav-right button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 20px;
 }
 
-// Function to display the banner (featured movie/show) and set currentItem
-function displayBanner(item) {
-  document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
-  document.getElementById('banner-title').textContent = item.title || item.name;
-  document.getElementById('banner-description').textContent = item.overview || 'No description available.';
-
-  // Set the currentItem to this movie/show
-  currentItem = item;
-
-  // Display the Play button (it might be hidden initially)
-  document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
+.browse-menu {
+  position: absolute;
+  background-color: #111;
+  width: 200px;
+  top: 60px;
+  right: 30px;
+  border-radius: 8px;
+  display: none;
+  z-index: 10;
 }
 
-// Display the list of movies, TV shows, or anime
-function displayList(items, containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = '';
-  items.forEach(item => {
-    const img = document.createElement('img');
-    img.src = `${IMG_URL}${item.poster_path}`;
-    img.alt = item.title || item.name;
-    img.onclick = () => showDetails(item);
-    container.appendChild(img);
-  });
+.browse-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-// Function to show details of a selected movie/show
-function showDetails(item) {
-  currentItem = item;
-  document.getElementById('modal-title').textContent = item.title || item.name;
-  document.getElementById('modal-description').textContent = item.overview || 'No description available.';
-  document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
-  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
-  changeServer();
-  document.getElementById('modal').style.display = 'flex';
+.browse-menu li {
+  padding: 10px;
+  border-bottom: 1px solid #444;
 }
 
-// Change the server for video embedding (e.g., Vidsrc, Videasy)
-function changeServer() {
-  const server = document.getElementById('server').value;
-  const type = currentItem.media_type === "movie" ? "movie" : "tv";
-  let embedURL = "";
-
-  if (server === "vidsrc.cc") {
-    embedURL = `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
-  } else if (server === "vidsrc.me") {
-    embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
-  } else if (server === "player.videasy.net") {
-    embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
-  }
-
-  document.getElementById('modal-video').src = embedURL;
+.browse-menu li a {
+  color: #fff;
+  text-decoration: none;
 }
 
-// Close the modal
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-  document.getElementById('modal-video').src = '';
+.browse-menu li a:hover {
+  color: #ff4757;
 }
 
-// Open the search modal
-function openSearchModal() {
-  document.getElementById('search-modal').style.display = 'flex';
-  document.getElementById('search-input').focus();
+/* Search Button */
+.search-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-// Close the search modal
-function closeSearchModal() {
-  document.getElementById('search-modal').style.display = 'none';
-  document.getElementById('search-results').innerHTML = '';
+/* Banner */
+.banner {
+  height: 50vh;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
 }
 
-// Search TMDB for movies/shows
-async function searchTMDB() {
-  const query = document.getElementById('search-input').value;
-  if (!query.trim()) {
-    document.getElementById('search-results').innerHTML = '';
-    return;
-  }
-
-  const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`);
-  const data = await res.json();
-
-  const container = document.getElementById('search-results');
-  container.innerHTML = '';
-  data.results.forEach(item => {
-    if (!item.poster_path) return;
-    const img = document.createElement('img');
-    img.src = `${IMG_URL}${item.poster_path}`;
-    img.alt = item.title || item.name;
-    img.onclick = () => {
-      closeSearchModal();
-      showDetails(item);
-    };
-    container.appendChild(img);
-  });
+.banner .overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  padding: 40px;
 }
 
-// Initialize and fetch trending data (movies, TV shows, anime)
-async function init() {
-  const movies = await fetchTrending('movie');
-  const tvShows = await fetchTrending('tv');
-  const anime = await fetchTrendingAnime();
-
-  displayBanner(movies[Math.floor(Math.random() * movies.length)]); // Display random featured movie/show
-  displayList(movies, 'movies-list');
-  displayList(tvShows, 'tvshows-list');
-  displayList(anime, 'anime-list');
+.banner h1 {
+  font-size: 40px;
+  color: #fff;
 }
 
-// Run the init function when the page loads
-init();
+#banner-description {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* Play Button Styling */
+.play-btn {
+  background-color: #ff4757; /* Red color */
+  color: white;
+  font-size: 18px;
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.play-btn:hover {
+  background-color: #e0394f; /* Darker red on hover */
+}
+
+/* Back to Home Button Styling */
+.back-btn {
+  color: #ff4757;
+  text-decoration: none;
+  font-size: 20px; /* Make the font size bigger */
+  margin-top: 20px;
+  display: inline-block;
+  padding: 10px 20px; /* Add padding to make the button bigger */
+  border: 2px solid #ff4757; /* Add border */
+  border-radius: 5px; /* Optional: rounded corners */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.back-btn:hover {
+  background-color: #ff4757; /* Change background color on hover */
+  color: white; /* Change text color on hover */
+}
+
+/* Container */
+.container {
+  padding: 30px 20px;
+}
+
+/* Rows */
+.row h2 {
+  font-size: 24px;
+  color: #ff4757;
+  margin-bottom: 10px;
+}
+
+/* Lists */
+.list {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.list img {
+  width: 150px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.list img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 900px;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+
+.modal-body {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-body img {
+  width: 35%;
+  border-radius: 8px;
+}
+
+.modal-text {
+  flex: 1;
+}
+
+.modal-text h2 {
+  margin-bottom: 10px;
+}
+
+.stars {
+  color: gold;
+}
+
+.modal p {
+  color: #ccc;
+}
+
+/* Video Wrapper (Responsive Video Player) */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+/* Close Button */
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #ff4757;
+}
+
+/* Server Selector */
+.server-selector {
+  margin-top: 10px;
+}
+
+.server-selector select {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* Search Modal */
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 200;
+}
+
+.search-modal input {
+  width: 90%;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.search-modal .results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.search-modal img {
+  width: 120px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.search-modal .close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #ff4757;
+}
+
+/* Footer */
+.footer {
+  background: #111;
+  color: #aaa;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: #ff4757;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
