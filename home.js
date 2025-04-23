@@ -8,7 +8,7 @@ function goToMoviePage() {
   // Hide the play button
   document.getElementById('play-btn').style.display = 'none';
 
-  // Optionally, show the video after play button is clicked
+  // Optionally, show the video after the play button is clicked
   document.getElementById('watch-video').style.display = 'block'; // Now the video iframe will be visible
 
   // Get the movie/show id from the currentItem
