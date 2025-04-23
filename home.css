@@ -284,3 +284,23 @@ body {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+/* Updated Back to Home Button */
+.back-btn {
+  color: #ff4757;
+  text-decoration: none;
+  font-size: 22px;  /* Increased the font size */
+  margin-top: 20px;
+  display: inline-block;
+  padding: 15px 30px;  /* Increased padding for larger size */
+  border: 3px solid #ff4757; /* Red border */
+  border-radius: 8px; /* Optional: rounded corners */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+  font-weight: bold;  /* Make the text bold */
+}
+
+.back-btn:hover {
+  background-color: #ff4757; /* Change background color on hover */
+  color: white; /* Change text color on hover */
+  border-color: white; /* Change border color to white on hover */
+}
