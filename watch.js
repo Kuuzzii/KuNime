@@ -1,8 +1,8 @@
 window.onload = function() {
   const urlParams = new URLSearchParams(window.location.search);
-  const movieId = urlParams.get('id'); // Get the movie/show id
-  const server = urlParams.get('server'); // Get the selected server (e.g., Vidsrc)
-  const type = urlParams.get('type'); // Get the type (movie or tv)
+  const movieId = urlParams.get('id');
+  const server = urlParams.get('server');
+  const type = urlParams.get('type');
   const episode = urlParams.get('episode'); // Get the episode parameter if available
 
   // Fetch movie/show details using the TMDB API
@@ -29,7 +29,6 @@ async function fetchMovieDetails(movieId, server, type, episode) {
 function getEmbedURL(server, type, id, episode = null) {
   let embedURL = "";
 
-  // Handling video embedding based on the server
   if (server === "vidsrc.cc") {
     if (episode) {
       embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}?episode=${episode}`; // Handle episode parameter
