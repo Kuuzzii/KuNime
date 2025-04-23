@@ -190,11 +190,6 @@ body {
   border-radius: 10px;
 }
 
-/* Initially hide the video iframe */
-#watch-video {
-  display: none;
-}
-
 /* Close Button */
 .close {
   position: absolute;
@@ -288,41 +283,4 @@ body {
 
 .footer-links a:hover {
   text-decoration: underline;
-}
-
-/* Watch Page Styling */
-.watch-container {
-  padding: 20px;
-  text-align: center;
-}
-
-.watch-container h1 {
-  font-size: 30px;
-  color: #fff;
-  margin-bottom: 20px;
-}
-
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  margin-top: 20px;
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-}
-
-/* Back to Home Button Styling */
-.back-btn {
-  color: #ff4757;
-  text-decoration: none;
-  font-size: 18px;
-  margin-top: 20px;
-  display: inline-block;
 }
