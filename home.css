@@ -206,7 +206,8 @@ body {
 
 #search-results .list img {
   width: 150px;  /* Ensure the images match the size of other movie images */
-  height: auto;  /* Maintain aspect ratio */
+  height: 225px;  /* Adjust the height to maintain aspect ratio, if needed */
+  object-fit: cover; /* Ensure the image doesn't stretch and maintains a proper aspect ratio */
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
