@@ -16,7 +16,7 @@ body {
   background: #111;
   padding: 15px 30px;
   display: flex;
-  justify-content: center; /* This keeps the logo centered in the navbar */
+  justify-content: center; /* Keeps the logo centered */
   align-items: center;
 }
 
@@ -30,9 +30,10 @@ body {
 }
 
 .navbar .logo span {
-  font-size: 22px;
+  font-size: 36px; /* Increase font size */
   font-weight: bold;
-  color: #ff4757;
+  color: #ff4757; /* Red color for the name */
+  letter-spacing: 2px; /* Adds a little spacing between letters for better appearance */
 }
 
 .search-btn {
