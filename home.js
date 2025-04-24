@@ -20,6 +20,8 @@ async function fetchTrending(type) {
 
 async function fetchTrendingAnime() {
   let allResults = [];
+
+  // Fetch from multiple pages to get more anime (max 3 pages for demo)
   for (let page = 1; page <= 3; page++) {
     const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
     const data = await res.json();
@@ -28,7 +30,17 @@ async function fetchTrendingAnime() {
     );
     allResults = allResults.concat(filtered);
   }
+
   return allResults;
+}
+
+// Function to display the banner (featured movie/show) and set currentItem
+function displayBanner(item) {
+  document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
+  document.getElementById('banner-title').textContent = item.title || item.name;
+  document.getElementById('banner-description').textContent = item.overview || 'No description available.';
+  currentItem = item; // Set the current item
+  document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
 }
 
 // Display the list of movies, TV shows, or anime
@@ -57,14 +69,11 @@ async function init() {
   const tvShows = await fetchTrending('tv');
   const anime = await fetchTrendingAnime();
 
-  // Display a random featured movie in the banner
-  if (movies.length > 0) {
-    displayBanner(movies[Math.floor(Math.random() * movies.length)]);
-  }
-
+  displayBanner(movies[Math.floor(Math.random() * movies.length)]); // Display random featured movie/show
   displayList(movies, 'movies-list');
   displayList(tvShows, 'tvshows-list');
   displayList(anime, 'anime-list');
 }
+
 // Run the init function when the page loads
 init();
