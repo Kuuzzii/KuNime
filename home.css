@@ -38,14 +38,6 @@ body {
   height: 40px;
 }
 
-.navbar .logo span {
-  font-size: 22px;
-  font-weight: bold;
-  color: #ff4757;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
 /* Centered name */
 .navbar .name {
   position: absolute;
@@ -56,6 +48,19 @@ body {
   color: #ff4757;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+/* Make the logo and name clickable */
+.navbar .logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline */
+}
+
+/* Remove text decoration on the name */
+.navbar .logo-link .name {
+  color: #ff4757;
+  text-decoration: none;
 }
 
 /* Search Bar Above Featured Video */
