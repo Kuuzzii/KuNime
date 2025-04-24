@@ -7,7 +7,7 @@ let currentItem; // Global variable to hold the currently selected movie/show
 function goToMoviePage() {
   const movieId = currentItem.id;
   const type = currentItem.media_type === 'movie' ? 'movie' : 'tv'; // Determine if it's a movie or TV show
-  const server = 'vidsrc.cc'; // Default server
+  const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`; // Redirect to watch.html
 }
 
