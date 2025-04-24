@@ -202,11 +202,12 @@ body {
   overflow-x: auto;
   gap: 10px;
   padding-bottom: 20px;
+  justify-content: flex-start;  /* Ensure images are aligned properly in a row */
 }
 
 #search-results .list img {
-  width: 150px;  /* Ensure the images match the size of other movie images */
-  height: 225px;  /* Adjust the height to maintain aspect ratio, if needed */
+  width: 150px;   /* Set the width of the images to 150px */
+  height: 225px;  /* Adjust the height to maintain aspect ratio */
   object-fit: cover; /* Ensure the image doesn't stretch and maintains a proper aspect ratio */
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
