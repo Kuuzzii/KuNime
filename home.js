@@ -145,6 +145,9 @@ async function searchTMDB() {
     img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
 
+    // Add the class to make sure the image is styled
+    img.classList.add("search-result-image");
+
     // When a result is clicked, redirect to its detailed page
     img.onclick = () => {
       window.location.href = `watch.html?id=${item.id}&server=vidsrc.cc&type=${item.media_type}`;
