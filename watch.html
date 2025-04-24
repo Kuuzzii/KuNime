@@ -13,23 +13,34 @@
       <img src="kunime-logo.png" alt="KuNime Logo">
       <span>KuNime</span>
     </div>
+    <button class="back-button" onclick="goBack()">&#8592; Back</button>
   </header>
 
-  <main class="container">
+  <main class="movie-container">
+    <div class="movie-backdrop" id="movie-backdrop">
+      <div class="movie-details">
+        <div class="movie-poster">
+          <img id="movie-poster" src="" alt="Movie Poster">
+        </div>
+        <div class="movie-info">
+          <h1 id="movie-title"></h1>
+          <p class="movie-meta">
+            <span id="movie-release-date"></span> • 
+            <span id="movie-runtime"></span>
+          </p>
+          <div id="movie-genres" class="movie-genres"></div>
+          <p id="movie-overview"></p>
+          <div class="movie-actions">
+            <button class="action-btn play-btn" onclick="playMovie()">&#9658; Play</button>
+            <button class="action-btn watchlist-btn">+ Add to watchlist</button>
+            <button class="action-btn download-btn">&#8681; Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="video-container">
       <iframe id="movie-video" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="movie-details">
-      <h1 id="movie-title"></h1>
-      <p id="movie-overview"></p>
-      <div class="server-selector">
-        <label for="server">Server:</label>
-        <select id="server" onchange="changeServer()">
-          <option value="vidsrc.cc">Vidsrc.cc</option>
-          <option value="vidsrc.me">Vidsrc.me</option>
-          <option value="player.videasy.net">Player.Videasy.net</option>
-        </select>
-      </div>
     </div>
   </main>
 
