@@ -87,7 +87,7 @@ body {
 .background-grid {
   position: relative;
   height: 70vh;
-  background: url('./assets/image-grid.jpg') center center / cover no-repeat; /* Replace 'your-image-grid.jpg' with your actual image path */
+  background: url('329633.jpg') center center / cover no-repeat; /* Replace 'your-image-grid.jpg' with your actual image path */
   display: flex;
   align-items: center;
   justify-content: center;
