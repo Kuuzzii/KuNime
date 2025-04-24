@@ -7,42 +7,31 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="home.css">
   <script defer src="home.js"></script>
-  <!-- Google Platform Library -->
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-  <!-- Navbar with Logo -->
+  <!-- Navbar with Logo (Centered) -->
   <header class="navbar">
     <div class="logo">
       <img src="kunime-logo.png" alt="KuNime Logo" />
       <span>KuNime</span>
     </div>
-    <div class="nav-right">
-      <!-- Search Button -->
-      <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
-    </div>
   </header>
 
   <!-- Search Bar Above Featured Video -->
   <section class="search-bar-container">
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
+    <input type="text" id="search-input" placeholder="Search for movies or shows..." />
     <button onclick="searchTMDB()">Search</button>
   </section>
 
   <!-- Display search results below the search bar -->
   <div id="search-results"></div>
 
-  <!-- Google Sign-In Button -->
-  <section id="google-signin">
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  </section>
-
   <!-- Banner Section -->
   <section class="banner" id="banner">
     <div class="overlay">
       <h1 id="banner-title"></h1>
       <p id="banner-description"></p>
-      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button> <!-- Play button to go to the movie -->
+      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button>
     </div>
   </section>
 
@@ -66,32 +55,6 @@
     </section>
   </main>
 
-  <!-- Modal for Movie Details -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="modal-body">
-        <img id="modal-image" src="" alt="Poster" />
-        <div class="modal-text">
-          <h2 id="modal-title"></h2>
-          <div class="stars" id="modal-rating"></div>
-          <p id="modal-description"></p>
-          <div class="server-selector">
-            <label for="server">Server:</label>
-            <select id="server" onchange="changeServer()">
-              <option value="vidsrc.cc">Vidsrc.cc</option>
-              <option value="vidsrc.me">Vidsrc.me</option>
-              <option value="player.videasy.net">Player.Videasy.net</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="video-wrapper">
-        <iframe id="modal-video" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
   <!-- Footer Section -->
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
@@ -101,88 +64,5 @@
       <a href="#">Contact</a>
     </div>
   </footer>
-
-  <script>
-    // Google Sign-In Success Function
-    function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      var id_token = googleUser.getAuthResponse().id_token;
-
-      // Save user data and token (you may choose to send this to the server for validation)
-      console.log("Google User Signed In");
-      console.log("Name: " + profile.getName());
-      console.log("Email: " + profile.getEmail());
-      console.log("ID Token: " + id_token);
-
-      // Save user information to localStorage (for the session)
-      localStorage.setItem('userLoggedIn', 'true');
-      localStorage.setItem('username', profile.getName());
-      localStorage.setItem('email', profile.getEmail());
-
-      // Redirect or process the logged-in user
-      window.location.href = "index.html"; // Redirect to home page or user dashboard
-    }
-
-    // Function to open the search modal and perform search
-    function openSearchModal() {
-      document.getElementById('search-modal').style.display = 'flex';
-      document.getElementById('search-input').focus();
-    }
-
-    // Function to close the search modal
-    function closeSearchModal() {
-      document.getElementById('search-modal').style.display = 'none';
-      document.getElementById('search-results').innerHTML = '';
-    }
-
-    // Search movies/tv shows using the TMDB API
-    async function searchTMDB() {
-      const query = document.getElementById('search-input').value;
-      const resultsContainer = document.getElementById('search-results');
-
-      if (!query.trim()) {
-        resultsContainer.innerHTML = '';
-        return;
-      }
-
-      const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=961334ce43e0adcaa714fddec89fcfd9&query=${query}`);
-      const data = await res.json();
-
-      // Clear previous search results
-      resultsContainer.innerHTML = '';
-
-      // Show new search results
-      data.results.forEach(item => {
-        if (!item.poster_path) return;
-        const img = document.createElement('img');
-        img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
-        img.alt = item.title || item.name;
-
-        // When an image is clicked, redirect to its detailed page
-        img.onclick = () => {
-          window.location.href = `watch.html?id=${item.id}&server=vidsrc.cc&type=${item.media_type}`;
-        };
-
-        resultsContainer.appendChild(img);
-      });
-    }
-
-    // Function to navigate to the play page (watch movie)
-    function goToMoviePage() {
-      const movieId = currentItem.id;
-      const type = currentItem.media_type === "movie" ? "movie" : "tv";
-      const server = 'vidsrc.cc'; // Default to 'vidsrc.cc'
-
-      window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
-    }
-
-    // Check if the user is logged in, if not redirect to login page
-    window.onload = function() {
-      const userLoggedIn = localStorage.getItem('userLoggedIn');
-      if (!userLoggedIn) {
-        window.location.href = 'login.html'; // Redirect to login page
-      }
-    }
-  </script>
 </body>
 </html>
