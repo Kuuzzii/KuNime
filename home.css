@@ -205,7 +205,7 @@ body {
 }
 
 #search-results .list img {
-  width: 150px;  /* Match the size of other movie images */
+  width: 150px;  /* Ensure the images match the size of other movie images */
   height: auto;  /* Maintain aspect ratio */
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
