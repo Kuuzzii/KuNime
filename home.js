@@ -128,7 +128,7 @@ async function searchTMDB() {
   const resultsContainer = document.getElementById('search-results');
 
   if (!query.trim()) {
-    resultsContainer.innerHTML = '';
+    resultsContainer.innerHTML = '';  // Clear if the search is empty
     return;
   }
 
