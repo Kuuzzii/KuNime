@@ -10,9 +10,9 @@ let currentServer = urlParams.get('server') || 'vidsrc.cc';
 
 // Example data for episodes and servers
 const episodes = [
-  { id: 1, title: "Episode 1", videoUrl: "https://example.com/episode1.mp4" },
-  { id: 2, title: "Episode 2", videoUrl: "https://example.com/episode2.mp4" },
-  { id: 3, title: "Episode 3", videoUrl: "https://example.com/episode3.mp4" },
+  { id: 1, title: "Episode 1", videoUrl: "https://vidsrc.cc/v2/embed/tv/37854/1" },
+  { id: 2, title: "Episode 2", videoUrl: "https://vidsrc.cc/v2/embed/tv/37854/2" },
+  { id: 3, title: "Episode 3", videoUrl: "https://vidsrc.cc/v2/embed/tv/37854/3" },
 ];
 
 const servers = [
@@ -49,7 +49,7 @@ async function fetchMovieDetails() {
   });
 
   initSelectors(); // Initialize episode and server selectors
-  changeServer(); // Set the video source
+  changeEpisode(); // Set the default episode
 }
 
 // Initialize the selectors
@@ -76,12 +76,29 @@ function initSelectors() {
   // Set default selections
   episodeSelect.value = episodes[0].videoUrl;
   serverSelect.value = currentServer;
+
+  // Add event listeners
+  episodeSelect.addEventListener('change', changeEpisode);
+  serverSelect.addEventListener('change', changeServer);
+}
+
+// Change the episode for video playback
+function changeEpisode() {
+  const episodeSelect = document.getElementById("episode-select");
+  const videoPlayer = document.getElementById("movie-video");
+
+  // Update the video source to the selected episode
+  videoPlayer.src = episodeSelect.value;
+  videoPlayer.play();
 }
 
 // Change the server for video embedding
 function changeServer() {
   const server = document.getElementById("server-select").value;
   currentServer = server; // Update the current server
+  const episodeSelect = document.getElementById("episode-select");
+  const videoPlayer = document.getElementById("movie-video");
+
   let embedURL = "";
 
   if (server === "vidsrc.cc") {
@@ -92,16 +109,8 @@ function changeServer() {
     embedURL = `https://player.videasy.net/${type}/${movieId}`;
   }
 
-  document.getElementById('movie-video').src = embedURL;
-}
-
-// Change the episode for video playback
-function changeEpisode() {
-  const episodeSelect = document.getElementById("episode-select");
-  const videoPlayer = document.getElementById("movie-video");
-
-  // Update the video source to the selected episode
-  videoPlayer.src = episodeSelect.value;
+  // Update the video source based on server and episode
+  videoPlayer.src = embedURL;
   videoPlayer.play();
 }
 
