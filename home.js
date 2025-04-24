@@ -11,9 +11,9 @@ function goToMoviePage() {
   const server = document.getElementById('server').value; // Get the selected server
 
   // Redirect to the movie page with appropriate parameters
+  // This is the page where the video will play
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
 }
-
 // Fetch Trending Movies/TV Shows/Anime
 async function fetchTrending(type) {
   const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
