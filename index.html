@@ -86,5 +86,70 @@
     </div>
   </footer>
 
+  <script>
+    let currentItem; // Global variable to hold the currently selected movie/show
+
+    // This function will be called when a movie/show is clicked
+    function showDetails(item) {
+      currentItem = item;
+      document.getElementById('modal-title').textContent = item.title || item.name;
+      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
+      document.getElementById('modal-image').src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+      document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+
+      // Show modal
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    // This function will be called when the "Watch" button is clicked
+    function goToMoviePage() {
+      const movieId = currentItem.id;
+      const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
+      const server = document.getElementById('server').value; // Get the selected server
+
+      // Redirect to the watch page with appropriate parameters
+      window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+    }
+
+    // Close the modal
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Fetch Trending Movies/TV Shows/Anime
+    async function fetchTrending(type) {
+      const res = await fetch(`https://api.themoviedb.org/3/trending/${type}/week?api_key=961334ce43e0adcaa714fddec89fcfd9`);
+      const data = await res.json();
+      return data.results;
+    }
+
+    // Function to display the list of movies, TV shows, or anime
+    function displayList(items, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach(item => {
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/original${item.poster_path}`;
+        img.alt = item.title || item.name;
+        img.onclick = () => showDetails(item); // When clicked, show details in modal
+        container.appendChild(img);
+      });
+    }
+
+    // Initialize and fetch trending data (movies, TV shows, anime)
+    async function init() {
+      const movies = await fetchTrending('movie');
+      const tvShows = await fetchTrending('tv');
+      const anime = await fetchTrendingAnime();
+
+      displayList(movies, 'movies-list');
+      displayList(tvShows, 'tvshows-list');
+      displayList(anime, 'anime-list');
+    }
+
+    // Run the init function when the page loads
+    window.onload = init;
+  </script>
+
 </body>
 </html>
