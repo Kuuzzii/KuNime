@@ -12,27 +12,33 @@ body {
 }
 
 .navbar {
-  background: #111;
-  padding: 15px 30px;
+  background-color: #111;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center; /* centers the brand */
+  align-items: center;
+}
+
+.navbar-center {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
-.logo {
+.brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  text-decoration: none;
 }
 
-.logo img {
-  height: 40px;
+.brand img {
+  height: 48px; /* make logo larger */
 }
 
-.logo span {
-  font-size: 28px;       /* Make the name bigger */
+.brand span {
+  font-size: 30px; /* make text a little bigger */
   font-weight: bold;
-  color: #ff4757;         /* Set color to red */
+  color: #ff4757; /* red color */
   letter-spacing: 1px;
 }
 
