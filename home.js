@@ -51,12 +51,19 @@ function displayList(items, containerId) {
     const img = document.createElement('img');
     img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
-    img.onclick = () => showDetails(item);
+
+    // Add the click event to redirect to watch.html
+    img.onclick = () => {
+      const type = item.media_type === 'movie' ? 'movie' : 'tv';
+      const server = 'vidsrc.cc'; // Default server
+      window.location.href = `watch.html?id=${item.id}&server=${server}&type=${type}`;
+    };
+
     container.appendChild(img);
   });
 }
 
-// Function to show details of a selected movie/show
+// Function to show details of a selected movie/show (if used for modals)
 function showDetails(item) {
   currentItem = item;
   document.getElementById('modal-title').textContent = item.title || item.name;
