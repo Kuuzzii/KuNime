@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KuNime</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="home.css">
   <script defer src="home.js"></script>
 </head>
 <body>
   <header class="navbar">
     <div class="logo">
-      <img src="kunime-logo.png" alt="KuNime Logo" />
+      <img src="kunime-logo.png" alt="KuNime Logo">
       <span>KuNime</span>
     </div>
     <div class="nav-right">
@@ -19,11 +18,18 @@
     </div>
   </header>
 
-  <section class="banner" id="banner">
-    <div class="overlay">
-      <h1 id="banner-title"></h1>
-      <p id="banner-description"></p>
-      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button>
+  <section class="featured-banner" id="featured-banner">
+    <div class="featured-overlay">
+      <h1 id="featured-title"></h1>
+      <p id="featured-description"></p>
+      <div class="movie-details">
+        <span id="featured-rating"></span>
+        <span id="featured-year-genre"></span>
+      </div>
+      <div class="banner-buttons">
+        <button class="play-btn" id="play-btn" onclick="playFeaturedMovie()">Play</button>
+        <button class="details-btn" onclick="viewMovieDetails()">See More</button>
+      </div>
     </div>
   </section>
 
@@ -43,26 +49,6 @@
       <div class="list" id="anime-list"></div>
     </section>
   </main>
-
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="modal-body">
-        <img id="modal-image" src="" alt="Poster" />
-        <div class="modal-text">
-          <h2 id="modal-title"></h2>
-          <div class="stars" id="modal-rating"></div>
-          <p id="modal-description"></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="search-modal" id="search-modal">
-    <span class="close" onclick="closeSearchModal()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
-    <div class="results" id="search-results"></div>
-  </div>
 
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
