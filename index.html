@@ -44,7 +44,7 @@
     </section>
   </main>
 
-  <!-- Back to Home Button -->
+  <!-- Back to Home -->
   <a href="index.html" class="back-to-home">← Back to Home</a>
 
   <!-- Modal and Search Modal (unchanged) -->
@@ -65,6 +65,7 @@
               <option value="player.videasy.net">Player.Videasy.net</option>
             </select>
           </div>
+          <button class="watch-btn" id="watch-btn" onclick="goToMoviePage()">Watch</button>
         </div>
       </div>
       <div class="video-wrapper">
@@ -94,15 +95,13 @@
     const IMG_URL = 'https://image.tmdb.org/t/p/original';
     let currentItem; // Global variable to hold the currently selected movie/show
 
-    // This function will be called when the Play button is clicked
+    // This function will be called when the "Watch" button is clicked
     function goToMoviePage() {
-      document.getElementById('play-btn').style.display = 'none';
-      document.getElementById('banner-description').style.display = 'none';
-
       const movieId = currentItem.id;
       const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
-      const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
+      const server = document.getElementById('server').value; // Get the selected server
 
+      // Redirect to the movie page with appropriate parameters (you can replace 'watch.html' with your desired portal)
       window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
     }
 
