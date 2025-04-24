@@ -18,15 +18,15 @@ async function fetchTrending(type) {
   return data.results;
 }
 
+// Fetch Trending Anime
 async function fetchTrendingAnime() {
   let allResults = [];
 
-  // Fetch from multiple pages to get more anime (max 3 pages for demo)
   for (let page = 1; page <= 3; page++) {
     const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
     const data = await res.json();
-    const filtered = data.results.filter(item =>
-      item.original_language === 'ja' && item.genre_ids.includes(16)
+    const filtered = data.results.filter(
+      (item) => item.original_language === 'ja' && item.genre_ids.includes(16)
     );
     allResults = allResults.concat(filtered);
   }
@@ -47,12 +47,11 @@ function displayBanner(item) {
 function displayList(items, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
-  items.forEach(item => {
+  items.forEach((item) => {
     const img = document.createElement('img');
     img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
 
-    // Add the click event to redirect to watch.html
     img.onclick = () => {
       const type = item.media_type === 'movie' ? 'movie' : 'tv';
       const server = 'vidsrc.cc'; // Default server
@@ -61,6 +60,32 @@ function displayList(items, containerId) {
 
     container.appendChild(img);
   });
+}
+
+// Perform search
+async function performSearch() {
+  const query = document.getElementById('search-bar').value.trim();
+  const resultsSection = document.getElementById('search-results-section');
+  const resultsContainer = document.getElementById('search-results');
+
+  if (!query) {
+    resultsSection.style.display = 'none';
+    resultsContainer.innerHTML = '';
+    return;
+  }
+
+  try {
+    const url = `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    displayList(data.results, 'search-results');
+    resultsSection.style.display = 'block'; // Show results section
+  } catch (error) {
+    console.error('Error performing search:', error);
+    resultsContainer.innerHTML = '<p>Error fetching search results.</p>';
+    resultsSection.style.display = 'block';
+  }
 }
 
 // Initialize and fetch trending data (movies, TV shows, anime)
