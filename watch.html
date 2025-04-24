@@ -1,68 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Watch Video</title>
-  <style>
-    .video-container {
-      display: block;
-      text-align: center;
-    }
-    .ad-container {
-      margin-top: 10px;
-    }
-  </style>
 </head>
 <body>
-  <header class="navbar">
-    <h1>KuNime</h1>
-  </header>
-
   <div class="video-container">
     <!-- Video Player -->
-    <div class="video-player">
-      <video id="video-player" width="100%" controls>
-        <source src="example-video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <!-- Ad Container -->
-    <div class="ad-container" id="ad-container">
+    <video id="video-player" width="100%" controls>
+      <source src="example-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <!-- Ad Section -->
+    <div id="ad-section" style="margin-top: 10px; text-align: center;">
       <script type="text/javascript">
         atOptions = {
-          'key' : 'a253f9333260470f2062b8d3c498fafe',
-          'format' : 'iframe',
-          'height' : 60,
-          'width' : 468,
-          'params' : {}
+          'key': 'a253f9333260470f2062b8d3c498fafe',
+          'format': 'iframe',
+          'height': 60,
+          'width': 468,
+          'params': {}
         };
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/a253f9333260470f2062b8d3c498fafe/invoke.js"></script>
     </div>
   </div>
-
-  <script>
-    // Function to reload the ad every 1 minute
-    function refreshAd() {
-      const adContainer = document.getElementById('ad-container');
-      adContainer.innerHTML = `
-        <script type="text/javascript">
-          atOptions = {
-            'key' : 'a253f9333260470f2062b8d3c498fafe',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/a253f9333260470f2062b8d3c498fafe/invoke.js"><\/script>
-      `;
-    }
-
-    // Set interval to refresh ad every 60 seconds
-    setInterval(refreshAd, 60000);
-  </script>
 </body>
 </html>
