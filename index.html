@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KuNime</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="home.css" />
   <script defer src="home.js"></script>
 </head>
 <body>
@@ -14,10 +13,12 @@
       <img src="kunime-logo.png" alt="KuNime Logo" />
       <span>KuNime</span>
     </div>
-    <div class="nav-right">
-      <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
-    </div>
   </header>
+
+  <!-- Search Bar Section -->
+  <div class="search-bar-container">
+    <input type="text" id="search-bar" placeholder="Search for movies or TV shows..." oninput="performSearch()" />
+  </div>
 
   <section class="banner" id="banner">
     <div class="overlay">
@@ -28,34 +29,25 @@
   </section>
 
   <main class="container">
-    <!-- Trending Movies Section -->
     <section class="row" id="trending-movies">
       <h2>🎬 Trending Movies</h2>
-      <div class="scroll-container">
-        <button class="scroll-arrow left-arrow" onclick="scrollMovies('movies-list', -300)">&lt;</button>
-        <div class="list" id="movies-list"></div>
-        <button class="scroll-arrow right-arrow" onclick="scrollMovies('movies-list', 300)">&gt;</button>
-      </div>
+      <div class="list" id="movies-list"></div>
     </section>
 
-    <!-- Trending TV Shows Section -->
     <section class="row">
       <h2>📺 Trending TV Shows</h2>
-      <div class="scroll-container">
-        <button class="scroll-arrow left-arrow" onclick="scrollMovies('tvshows-list', -300)">&lt;</button>
-        <div class="list" id="tvshows-list"></div>
-        <button class="scroll-arrow right-arrow" onclick="scrollMovies('tvshows-list', 300)">&gt;</button>
-      </div>
+      <div class="list" id="tvshows-list"></div>
     </section>
 
-    <!-- Trending Anime Section -->
     <section class="row">
       <h2>🎌 Trending Anime</h2>
-      <div class="scroll-container">
-        <button class="scroll-arrow left-arrow" onclick="scrollMovies('anime-list', -300)">&lt;</button>
-        <div class="list" id="anime-list"></div>
-        <button class="scroll-arrow right-arrow" onclick="scrollMovies('anime-list', 300)">&gt;</button>
-      </div>
+      <div class="list" id="anime-list"></div>
+    </section>
+
+    <!-- Search Results Section -->
+    <section class="row" id="search-results-section">
+      <h2>🔍 Search Results</h2>
+      <div class="list" id="search-results"></div>
     </section>
   </main>
 
