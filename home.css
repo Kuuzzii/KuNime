@@ -22,9 +22,10 @@ body {
   background: #111;
   padding: 15px 30px;
   display: flex;
-  justify-content: space-between; /* This allows for space between logo and title */
+  justify-content: center; /* Center the content */
   align-items: center;
   z-index: 10;
+  gap: 20px; /* To add space between logo and name */
 }
 
 /* Logo section on the left */
@@ -40,9 +41,6 @@ body {
 
 /* Centered name */
 .navbar .name {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 22px;
   font-weight: bold;
   color: #ff4757;
@@ -51,16 +49,13 @@ body {
 }
 
 /* Make the logo and name clickable */
-.navbar .logo-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none; /* Remove underline */
+.navbar .logo a {
+  text-decoration: none;
 }
 
-/* Remove text decoration on the name */
-.navbar .logo-link .name {
-  color: #ff4757;
+.navbar .name {
   text-decoration: none;
+  color: #ff4757;
 }
 
 /* Search Bar Above Featured Video */
@@ -112,8 +107,8 @@ body {
 }
 
 #search-results img {
-  width: 150px; /* Match the size of movie poster images */
-  height: 225px; /* Make sure the height matches for better consistency */
+  width: 150px;
+  height: 225px;
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -132,19 +127,19 @@ body {
   color: white;
   font-size: 18px;
   text-decoration: none;
-  border: 2px solid #ff4757; /* Red border */
+  border: 2px solid #ff4757;
   border-radius: 8px;
   margin-top: 20px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: #ff4757; /* Red background on hover */
-  transform: scale(1.05); /* Slightly increase the button size on hover */
+  background-color: #ff4757;
+  transform: scale(1.05);
 }
 
 .back-btn:active {
-  background-color: #e0394f; /* Darker red when clicked */
+  background-color: #e0394f;
 }
 
 /* Banner Section */
@@ -184,7 +179,7 @@ body {
 
 /* Play Button Styling */
 .play-btn {
-  background-color: #ff4757; /* Red color */
+  background-color: #ff4757;
   color: white;
   font-size: 18px;
   padding: 12px 30px;
@@ -195,7 +190,7 @@ body {
 }
 
 .play-btn:hover {
-  background-color: #e0394f; /* Darker red on hover */
+  background-color: #e0394f;
 }
 
 /* Container */
