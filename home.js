@@ -63,6 +63,12 @@ function displayList(items, containerId) {
   });
 }
 
+// Scroll Movies Function
+function scrollMovies(containerId, scrollAmount) {
+  const container = document.getElementById(containerId);
+  container.scrollLeft += scrollAmount;
+}
+
 // Initialize and fetch trending data (movies, TV shows, anime)
 async function init() {
   const movies = await fetchTrending('movie');
