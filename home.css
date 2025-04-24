@@ -11,29 +11,29 @@ body {
   color: #f5f5f5;
 }
 
-/* Navbar */
 .navbar {
   background: #111;
   padding: 15px 30px;
   display: flex;
-  justify-content: center; /* Keeps the logo centered */
   align-items: center;
+  position: relative;
 }
 
-.navbar .logo {
-  position: absolute;
-  left: 30px; /* Move logo to the left */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.navbar .logo img {
+.logo img {
   height: 40px;
 }
 
-.navbar .logo span {
-  font-size: 36px; /* Increase font size */
+.logo span {
+  font-size: 28px;       /* Make the name bigger */
   font-weight: bold;
-  color: #ff4757; /* Red color for the name */
-  letter-spacing: 2px; /* Adds a little spacing between letters for better appearance */
+  color: #ff4757;         /* Set color to red */
+  letter-spacing: 1px;
 }
 
 .search-btn {
