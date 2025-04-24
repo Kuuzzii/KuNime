@@ -3,12 +3,12 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const IMG_URL = 'https://image.tmdb.org/t/p/original';
 let currentItem; // Global variable to hold the currently selected movie/show
 
-// This function will be called when the Play button is clicked
+// Redirect to the dedicated watch page
 function goToMoviePage() {
   // Get the movie/show id from the currentItem
   const movieId = currentItem.id;
   const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
-  const server = 'vidsrc.cc'; // Default to 'vidsrc.cc', or let the user select a server
+  const server = 'vidsrc.cc'; // Default to 'vidsrc.cc' as the server
 
   // Redirect to the watch page with the correct query parameters
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
