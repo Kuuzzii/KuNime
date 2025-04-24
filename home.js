@@ -29,7 +29,7 @@ function changeFeaturedMovie() {
   overlay.classList.add('animate-slide');
 
   // Update banner content
-  banner.style.backgroundImage = `url(${IMG_URL}${movie.backdrop_path})`;
+ banner.style.backgroundImage = `url(${movie.image})`;
   title.textContent = movie.title || movie.name;
   description.textContent = movie.overview || 'No description available.';
 
