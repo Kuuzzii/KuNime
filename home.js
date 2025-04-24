@@ -11,6 +11,12 @@ function goToMoviePage() {
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`; // Redirect to watch.html
 }
 
+// Scroll to the "Trending Movies" section
+function scrollToTrendingMovies() {
+  const trendingSection = document.getElementById('trending-movies');
+  trendingSection.scrollIntoView({ behavior: 'smooth' });
+}
+
 // Fetch Trending Movies/TV Shows/Anime
 async function fetchTrending(type) {
   const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
