@@ -145,7 +145,7 @@ async function searchTMDB() {
     img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
 
-    // Add the class to make sure the image is styled
+    // Add the class to ensure the images are styled correctly
     img.classList.add("search-result-image");
 
     // When a result is clicked, redirect to its detailed page
