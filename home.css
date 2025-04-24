@@ -12,32 +12,35 @@ body {
 }
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
   background-color: #111;
-  position: relative;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center; /* centers the brand */
+  align-items: center;
 }
 
-.logo-left {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+.navbar-center {
+  display: flex;
+  align-items: center;
 }
 
-.logo-left img {
-  height: 48px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
 }
 
-.center-name {
-  margin: 0 auto;
-  font-size: 30px;
+.brand img {
+  height: 48px; /* make logo larger */
+}
+
+.brand span {
+  font-size: 30px; /* make text a little bigger */
   font-weight: bold;
-  color: #ff4757;
+  color: #ff4757; /* red color */
+  letter-spacing: 1px;
 }
-
 
 .search-btn {
   background: none;
@@ -87,51 +90,30 @@ body {
 }
 
 /* Banner Section */
-/* Featured Banner with swipe effect */
-#banner {
-  position: relative;
-  overflow: hidden;
+.banner {
+  height: 50vh;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}
+
+.banner .overlay {
+  background-color: rgba(0, 0, 0, 0.6);
   width: 100%;
-  height: 400px;
+  padding: 40px;
 }
 
-#banner .overlay {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 100%;
-  height: 100%;
-  transition: left 1s ease-in-out;
+.banner h1 {
+  font-size: 40px;
+  color: #fff;
 }
 
-#banner.active .overlay {
-  left: 0;
+#banner-description {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 20px;
 }
-
-#banner .overlay-content {
-  position: absolute;
-  bottom: 10%;
-  left: 5%;
-  color: white;
-  z-index: 1;
-}
-
-#banner h1 {
-  font-size: 2.5rem;
-}
-
-#banner p {
-  font-size: 1.2rem;
-}
-
-#banner button {
-  background-color: #e44d34;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-}
-
 
 /* Play Button Styling */
 .play-btn {
