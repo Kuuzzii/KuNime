@@ -12,35 +12,32 @@ body {
 }
 
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
   background-color: #111;
-  padding: 20px 0;
-  display: flex;
-  justify-content: center; /* centers the brand */
-  align-items: center;
+  position: relative;
 }
 
-.navbar-center {
-  display: flex;
-  align-items: center;
+.logo-left {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  text-decoration: none;
+.logo-left img {
+  height: 48px;
 }
 
-.brand img {
-  height: 48px; /* make logo larger */
-}
-
-.brand span {
-  font-size: 30px; /* make text a little bigger */
+.center-name {
+  margin: 0 auto;
+  font-size: 30px;
   font-weight: bold;
-  color: #ff4757; /* red color */
-  letter-spacing: 1px;
+  color: #ff4757;
 }
+
 
 .search-btn {
   background: none;
