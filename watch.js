@@ -1,49 +1,39 @@
-window.onload = function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const movieId = urlParams.get('id');
-  const server = urlParams.get('server');
-  const type = urlParams.get('type');
-  const episode = urlParams.get('episode'); // Get the episode parameter if available
+const API_KEY = '961334ce43e0adcaa714fddec89fcfd9';
+const BASE_URL = 'https://api.themoviedb.org/3';
+const IMG_URL = 'https://image.tmdb.org/t/p/original';
 
-  // Fetch movie/show details using the TMDB API
-  fetchMovieDetails(movieId, server, type, episode);
-};
+// Extract query parameters from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const movieId = urlParams.get('id');
+const type = urlParams.get('type');
+let currentServer = urlParams.get('server') || 'vidsrc.cc';
 
-async function fetchMovieDetails(movieId, server, type, episode) {
-  const res = await fetch(`https://api.themoviedb.org/3/${type}/${movieId}?api_key=961334ce43e0adcaa714fddec89fcfd9`);
+// Fetch movie details based on the ID
+async function fetchMovieDetails() {
+  const res = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}`);
   const data = await res.json();
 
-  // Set the movie/show title
+  // Set movie details in the UI
   document.getElementById('movie-title').textContent = data.title || data.name;
-
-  // Set the description (overview)
-  const description = data.overview || "No description available.";  // Default description if not available
-  document.getElementById('banner-title').textContent = data.title || data.name;  // Featured title
-  document.getElementById('banner-description').textContent = description;  // Featured description
-
-  // Construct the embed URL for the video
-  const embedURL = getEmbedURL(server, type, movieId, episode);
-  document.getElementById('watch-video').src = embedURL;
+  document.getElementById('movie-overview').textContent = data.overview || 'No description available.';
+  changeServer(); // Set the video source
 }
 
-function getEmbedURL(server, type, id, episode = null) {
+// Change the server for video embedding
+function changeServer() {
+  const server = document.getElementById('server').value;
   let embedURL = "";
 
   if (server === "vidsrc.cc") {
-    if (episode) {
-      embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}?episode=${episode}`; // Handle episode parameter
-    } else {
-      embedURL = `https://vidsrc.cc/v2/embed/${type}/${id}`;
-    }
+    embedURL = `https://vidsrc.cc/v2/embed/${type}/${movieId}`;
   } else if (server === "vidsrc.me") {
-    if (episode) {
-      embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${id}&episode=${episode}`;
-    } else {
-      embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${id}`;
-    }
+    embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${movieId}`;
   } else if (server === "player.videasy.net") {
-    embedURL = `https://player.videasy.net/${type}/${id}`;
+    embedURL = `https://player.videasy.net/${type}/${movieId}`;
   }
 
-  return embedURL;
+  document.getElementById('movie-video').src = embedURL;
 }
+
+// Initialize the page
+fetchMovieDetails();
