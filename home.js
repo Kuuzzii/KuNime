@@ -51,16 +51,20 @@ function displayList(items, containerId) {
   });
 }
 
-// Initialize and fetch trending data
+// Initialize and fetch trending data (movies, TV shows, anime)
 async function init() {
   const movies = await fetchTrending('movie');
   const tvShows = await fetchTrending('tv');
   const anime = await fetchTrendingAnime();
 
+  // Display a random featured movie in the banner
+  if (movies.length > 0) {
+    displayBanner(movies[Math.floor(Math.random() * movies.length)]);
+  }
+
   displayList(movies, 'movies-list');
   displayList(tvShows, 'tvshows-list');
   displayList(anime, 'anime-list');
 }
-
 // Run the init function when the page loads
 init();
