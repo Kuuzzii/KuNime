@@ -303,7 +303,7 @@ body {
 .background-grid {
   position: relative;
   height: 70vh;
-  background: url('your-image-grid.jpg') center center / cover no-repeat;
+  background: url('your-image-grid.jpg') center center / cover no-repeat; /* Replace 'your-image-grid.jpg' with your actual image path */
   display: flex;
   align-items: center;
   justify-content: center;
