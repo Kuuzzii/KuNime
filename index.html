@@ -23,7 +23,7 @@
     <div class="overlay">
       <h1 id="banner-title"></h1>
       <p id="banner-description"></p>
-      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button> <!-- Play button to go to the movie -->
+      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button>
     </div>
   </section>
 
@@ -53,18 +53,7 @@
           <h2 id="modal-title"></h2>
           <div class="stars" id="modal-rating"></div>
           <p id="modal-description"></p>
-          <div class="server-selector">
-            <label for="server">Server:</label>
-            <select id="server" onchange="changeServer()">
-              <option value="vidsrc.cc">Vidsrc.cc</option>
-              <option value="vidsrc.me">Vidsrc.me</option>
-              <option value="player.videasy.net">Player.Videasy.net</option>
-            </select>
-          </div>
         </div>
-      </div>
-      <div class="video-wrapper">
-        <iframe id="modal-video" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </div>
