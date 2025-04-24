@@ -13,20 +13,8 @@ body {
   align-items: center;
 }
 
-.navbar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .navbar .logo img {
   height: 40px;
-}
-
-.navbar .logo span {
-  font-size: 22px;
-  font-weight: bold;
-  color: #ff4757;
 }
 
 .container {
@@ -35,7 +23,7 @@ body {
 
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%;
   height: 0;
   width: 100%;
   margin-bottom: 20px;
@@ -56,18 +44,7 @@ body {
 
 .movie-details h1 {
   font-size: 24px;
-  color: #ff4757;
   margin-bottom: 10px;
-}
-
-.movie-details p {
-  font-size: 16px;
-  color: #ccc;
-  margin-bottom: 20px;
-}
-
-.server-selector {
-  margin-top: 10px;
 }
 
 .server-selector select {
@@ -75,13 +52,4 @@ body {
   border-radius: 5px;
   background-color: #333;
   color: #fff;
-  border: 1px solid #555;
-}
-
-.footer {
-  background: #111;
-  color: #aaa;
-  text-align: center;
-  padding: 20px;
-  margin-top: 20px;
 }
