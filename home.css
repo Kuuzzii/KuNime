@@ -195,3 +195,23 @@ body {
   color: #888;
   margin-top: 20px;
 }
+
+/* Search Results */
+#search-results .list {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+#search-results .list img {
+  width: 150px;  /* Match the size of other movie images */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+#search-results .list img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
+}
