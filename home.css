@@ -67,25 +67,19 @@ body {
 }
 
 .search-results {
-  position: absolute;
-  top: 50px;
-  left: 25%;
-  width: 50%;
-  background: #111;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-height: 300px;
-  overflow-y: auto;
-  padding: 10px;
-  display: none; /* Hidden by default */
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 .search-results img {
-  width: 100px;
-  height: 150px;
+  width: 150px;
+  height: 225px;
   object-fit: cover;
   border-radius: 5px;
-  margin: 5px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
