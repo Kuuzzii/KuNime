@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KuNime</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="home.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="home.css">
+  <script defer src="home.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -14,10 +15,7 @@
       <span>KuNime</span>
     </div>
     <div class="nav-right">
-      <!-- Search Icon -->
-      <button class="search-btn" onclick="navigateToSearch()">
-        <i class="fas fa-search"></i>
-      </button>
+      <button class="search-btn" onclick="openSearchModal()"><i class="fas fa-search"></i></button>
     </div>
   </header>
 
@@ -30,19 +28,34 @@
   </section>
 
   <main class="container">
+    <!-- Trending Movies Section -->
     <section class="row" id="trending-movies">
       <h2>🎬 Trending Movies</h2>
-      <div class="list" id="movies-list"></div>
+      <div class="scroll-container">
+        <button class="scroll-arrow left-arrow" onclick="scrollMovies('movies-list', -300)">&lt;</button>
+        <div class="list" id="movies-list"></div>
+        <button class="scroll-arrow right-arrow" onclick="scrollMovies('movies-list', 300)">&gt;</button>
+      </div>
     </section>
 
+    <!-- Trending TV Shows Section -->
     <section class="row">
       <h2>📺 Trending TV Shows</h2>
-      <div class="list" id="tvshows-list"></div>
+      <div class="scroll-container">
+        <button class="scroll-arrow left-arrow" onclick="scrollMovies('tvshows-list', -300)">&lt;</button>
+        <div class="list" id="tvshows-list"></div>
+        <button class="scroll-arrow right-arrow" onclick="scrollMovies('tvshows-list', 300)">&gt;</button>
+      </div>
     </section>
 
+    <!-- Trending Anime Section -->
     <section class="row">
       <h2>🎌 Trending Anime</h2>
-      <div class="list" id="anime-list"></div>
+      <div class="scroll-container">
+        <button class="scroll-arrow left-arrow" onclick="scrollMovies('anime-list', -300)">&lt;</button>
+        <div class="list" id="anime-list"></div>
+        <button class="scroll-arrow right-arrow" onclick="scrollMovies('anime-list', 300)">&gt;</button>
+      </div>
     </section>
   </main>
 
@@ -54,11 +67,5 @@
       <a href="#">Contact</a>
     </div>
   </footer>
-
-  <script>
-    function navigateToSearch() {
-      window.location.href = "search.html"; // Redirect to the search page
-    }
-  </script>
 </body>
 </html>
