@@ -98,14 +98,42 @@ body {
   margin-bottom: 10px;
 }
 
-/* Lists */
-.list {
+/* Scroll Container */
+.scroll-container {
+  position: relative;
   display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding-bottom: 20px;
+  align-items: center;
 }
 
+.scroll-container .list {
+  display: flex;
+  overflow-x: hidden;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+
+.scroll-container .scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.scroll-container .scroll-arrow.left-arrow {
+  left: 0;
+}
+
+.scroll-container .scroll-arrow.right-arrow {
+  right: 0;
+}
+
+/* Movie Cards */
 .list img {
   width: 150px;
   border-radius: 8px;
@@ -116,60 +144,6 @@ body {
 .list img:hover {
   transform: scale(1.08);
   box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
-}
-
-/* Modal Styling */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.modal-content {
-  width: 90%;
-  max-width: 900px;
-  background: #1e1e1e;
-  padding: 20px;
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #fff;
-}
-
-.modal-body {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.modal-body img {
-  width: 35%;
-  border-radius: 8px;
-}
-
-.modal-text {
-  flex: 1;
-}
-
-.modal-text h2 {
-  margin-bottom: 10px;
-}
-
-.stars {
-  color: gold;
-}
-
-.modal p {
-  color: #ccc;
 }
 
 /* Footer */
