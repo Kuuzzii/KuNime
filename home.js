@@ -18,22 +18,6 @@ async function fetchTrending(type) {
   return data.results;
 }
 
-// Fetch Trending Anime
-async function fetchTrendingAnime() {
-  let allResults = [];
-
-  for (let page = 1; page <= 3; page++) {
-    const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
-    const data = await res.json();
-    const filtered = data.results.filter(
-      (item) => item.original_language === 'ja' && item.genre_ids.includes(16)
-    );
-    allResults = allResults.concat(filtered);
-  }
-
-  return allResults;
-}
-
 // Function to display the banner (featured movie/show) and set currentItem
 function displayBanner(item) {
   document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
@@ -43,34 +27,40 @@ function displayBanner(item) {
   document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
 }
 
-// Display the list of movies, TV shows, or anime
-function displayList(items, containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = '';
-  items.forEach((item) => {
-    const img = document.createElement('img');
-    img.src = `${IMG_URL}${item.poster_path}`;
-    img.alt = item.title || item.name;
+// Display Search Results
+function displaySearchResults(results) {
+  const searchResults = document.getElementById('search-results');
+  searchResults.innerHTML = ''; // Clear previous results
 
-    img.onclick = () => {
-      const type = item.media_type === 'movie' ? 'movie' : 'tv';
-      const server = 'vidsrc.cc'; // Default server
-      window.location.href = `watch.html?id=${item.id}&server=${server}&type=${type}`;
-    };
+  if (results.length === 0) {
+    searchResults.innerHTML = '<p>No results found.</p>';
+    return;
+  }
 
-    container.appendChild(img);
+  results.forEach(result => {
+    if (result.poster_path) {
+      const img = document.createElement('img');
+      img.src = `${IMG_URL}${result.poster_path}`;
+      img.alt = result.title || result.name;
+      img.onclick = () => {
+        const type = result.media_type === 'movie' ? 'movie' : 'tv';
+        window.location.href = `watch.html?id=${result.id}&type=${type}`;
+      };
+      searchResults.appendChild(img);
+    }
   });
+
+  searchResults.style.display = 'block'; // Show search results
 }
 
 // Perform search
 async function performSearch() {
   const query = document.getElementById('search-bar').value.trim();
-  const resultsSection = document.getElementById('search-results-section');
-  const resultsContainer = document.getElementById('search-results');
+  const searchResults = document.getElementById('search-results');
 
   if (!query) {
-    resultsSection.style.display = 'none';
-    resultsContainer.innerHTML = '';
+    searchResults.style.display = 'none'; // Hide results if the query is empty
+    searchResults.innerHTML = '';
     return;
   }
 
@@ -79,16 +69,15 @@ async function performSearch() {
     const res = await fetch(url);
     const data = await res.json();
 
-    displayList(data.results, 'search-results');
-    resultsSection.style.display = 'block'; // Show results section
+    displaySearchResults(data.results);
   } catch (error) {
     console.error('Error performing search:', error);
-    resultsContainer.innerHTML = '<p>Error fetching search results.</p>';
-    resultsSection.style.display = 'block';
+    searchResults.innerHTML = '<p>Unable to fetch results.</p>';
+    searchResults.style.display = 'block';
   }
 }
 
-// Initialize and fetch trending data (movies, TV shows, anime)
+// Initialize and fetch trending data
 async function init() {
   const movies = await fetchTrending('movie');
   const tvShows = await fetchTrending('tv');
