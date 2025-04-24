@@ -18,11 +18,8 @@
 
   <main>
     <section class="movie-details">
-      <!-- Background image -->
       <div class="movie-backdrop" id="movie-backdrop"></div>
-
-      <!-- Movie details content -->
-      <div class="movie-content">
+      <div class="movie-info">
         <div class="movie-poster">
           <img id="movie-poster" alt="Movie Poster">
         </div>
@@ -32,8 +29,17 @@
           <p id="movie-runtime"></p>
           <div id="movie-genres" class="genres"></div>
           <p id="movie-overview"></p>
+          <div class="action-buttons">
+            <button class="play-btn" onclick="playMovie()">Play</button>
+            <button class="wishlist-btn">+ Add to wishlist</button>
+            <button class="download-btn">⇩ Download</button>
+          </div>
         </div>
       </div>
+    </section>
+
+    <section class="video-container">
+      <iframe id="movie-video" frameborder="0" allowfullscreen></iframe>
     </section>
   </main>
 
