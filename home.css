@@ -105,28 +105,6 @@ body {
   box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
 }
 
-/* Back to Home Button */
-.back-to-home {
-  background-color: #ff4757; /* Red background */
-  color: white;
-  padding: 12px 30px; /* Make it a little longer */
-  border: 2px solid #ff4757; /* Red border */
-  border-radius: 8px;
-  text-decoration: none; /* Remove underline */
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  display: inline-block;
-  margin-top: 20px;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.back-to-home:hover {
-  background-color: white; /* Change to white on hover */
-  color: #ff4757; /* Change text to red */
-  border-color: #ff4757; /* Keep the red border */
-}
-
 /* Banner */
 .banner {
   height: 50vh;
@@ -166,6 +144,23 @@ body {
 }
 
 .play-btn:hover {
+  background-color: #e0394f; /* Darker red on hover */
+}
+
+/* Watch Button */
+.watch-btn {
+  background-color: #ff4757;
+  color: white;
+  font-size: 18px;
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+.watch-btn:hover {
   background-color: #e0394f; /* Darker red on hover */
 }
 
