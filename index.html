@@ -6,25 +6,6 @@
   <title>KuNime</title>
   <link rel="stylesheet" href="home.css" />
   <script defer src="home.js"></script>
-  <style>
-    /* Fix layout issues */
-    .video-container {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-    .video-player {
-      flex: 3;
-    }
-    .ad-container {
-      flex: 1;
-      display: none; /* Ad is initially hidden */
-    }
-    /* Ensure other sections remain visible */
-    .container, .row {
-      display: block;
-    }
-  </style>
 </head>
 <body>
   <header class="navbar">
@@ -41,22 +22,24 @@
     </a>
   </div>
 
-  <!-- Video Section with Ad -->
-  <div class="video-container">
-    <!-- Video Player -->
-    <div class="video-player">
-      <video id="video-player" width="100%" controls>
-        <source src="example-video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <!-- Ad Container -->
-    <div class="ad-container" id="ad-container">
-      <script async="async" data-cfasync="false" src="//pl26470336.profitableratecpm.com/5af6a2aead5fe18bf555240b3b660ad6/invoke.js"></script>
-      <div id="container-5af6a2aead5fe18bf555240b3b660ad6"></div>
-    </div>
+  <!-- Adsterra Ad Unit -->
+  <div id="adsterra-ad">
+    <script type='text/javascript' src='//pl26470008.profitableratecpm.com/f0/49/1d/f0491deb8dfb94456f7a98624dbc0e1b.js'></script>
   </div>
+
+  <!-- Search Bar Section -->
+  <div class="search-bar-container">
+    <input type="text" id="search-bar" placeholder="Search for movies or TV shows..." oninput="performSearch()" />
+    <div id="search-results" class="search-results"></div>
+  </div>
+
+  <section class="banner" id="banner">
+    <div class="overlay">
+      <h1 id="banner-title"></h1>
+      <p id="banner-description"></p>
+      <button class="play-btn" id="play-btn" onclick="goToMoviePage()">Play</button>
+    </div>
+  </section>
 
   <main class="container">
     <section class="row" id="trending-movies">
@@ -88,19 +71,5 @@
       <p>Contact: <a href="Johnmarcuzvaldez33@gmail.com">Johnmarcuzvaldez33@gmail.com</a></p>
     </div>
   </footer>
-
-  <script>
-    // Ensure the ad only appears when the video starts playing
-    const videoPlayer = document.getElementById('video-player');
-    const adContainer = document.getElementById('ad-container');
-
-    videoPlayer.addEventListener('play', () => {
-      adContainer.style.display = 'block'; // Show the ad when the video starts
-    });
-
-    videoPlayer.addEventListener('pause', () => {
-      adContainer.style.display = 'none'; // Optionally hide the ad when the video pauses
-    });
-  </script>
 </body>
 </html>
