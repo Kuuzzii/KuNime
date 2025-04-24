@@ -50,7 +50,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: left;
   padding: 20px;
   color: #fff;
 }
@@ -64,12 +64,30 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(0.5);
+  filter: brightness(0.4);
   z-index: -1;
 }
 
-.movie-info {
+.movie-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
   z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.movie-poster {
+  flex-shrink: 0;
+}
+
+.movie-poster img {
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.movie-meta {
   max-width: 800px;
 }
 
@@ -86,7 +104,6 @@ body {
 
 .genres {
   display: flex;
-  justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
 }
