@@ -28,41 +28,36 @@
   </section>
 
   <main class="container">
+    <!-- Trending Movies Section -->
     <section class="row" id="trending-movies">
       <h2>🎬 Trending Movies</h2>
-      <div class="list" id="movies-list"></div>
+      <div class="scroll-container">
+        <button class="scroll-arrow left-arrow" onclick="scrollMovies('movies-list', -300)">&lt;</button>
+        <div class="list" id="movies-list"></div>
+        <button class="scroll-arrow right-arrow" onclick="scrollMovies('movies-list', 300)">&gt;</button>
+      </div>
     </section>
 
+    <!-- Trending TV Shows Section -->
     <section class="row">
       <h2>📺 Trending TV Shows</h2>
-      <div class="list" id="tvshows-list"></div>
+      <div class="scroll-container">
+        <button class="scroll-arrow left-arrow" onclick="scrollMovies('tvshows-list', -300)">&lt;</button>
+        <div class="list" id="tvshows-list"></div>
+        <button class="scroll-arrow right-arrow" onclick="scrollMovies('tvshows-list', 300)">&gt;</button>
+      </div>
     </section>
 
+    <!-- Trending Anime Section -->
     <section class="row">
       <h2>🎌 Trending Anime</h2>
-      <div class="list" id="anime-list"></div>
+      <div class="scroll-container">
+        <button class="scroll-arrow left-arrow" onclick="scrollMovies('anime-list', -300)">&lt;</button>
+        <div class="list" id="anime-list"></div>
+        <button class="scroll-arrow right-arrow" onclick="scrollMovies('anime-list', 300)">&gt;</button>
+      </div>
     </section>
   </main>
-
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="modal-body">
-        <img id="modal-image" src="" alt="Poster" />
-        <div class="modal-text">
-          <h2 id="modal-title"></h2>
-          <div class="stars" id="modal-rating"></div>
-          <p id="modal-description"></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="search-modal" id="search-modal">
-    <span class="close" onclick="closeSearchModal()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for movies or shows..." oninput="searchTMDB()" />
-    <div class="results" id="search-results"></div>
-  </div>
 
   <footer class="footer">
     <p>&copy; 2025 KuNime. All rights reserved.</p>
