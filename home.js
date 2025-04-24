@@ -19,24 +19,15 @@ function changeFeaturedMovie() {
 
   const movie = featuredMovies[currentIndex];
   const banner = document.getElementById('banner');
-  const overlay = banner.querySelector('.overlay');
   const title = document.getElementById('banner-title');
   const description = document.getElementById('banner-description');
-
-  // Trigger swipe animation
-  overlay.classList.remove('animate-slide');
-  void overlay.offsetWidth; // Force reflow
-  overlay.classList.add('animate-slide');
-
-  // Update banner content
+  
+  // Change the banner content to the next movie
   banner.style.backgroundImage = `url(${IMG_URL}${movie.backdrop_path})`;
   title.textContent = movie.title || movie.name;
   description.textContent = movie.overview || 'No description available.';
-
-  // Set currentItem
-  currentItem = movie;
-
-  // Update index for next change
+  
+  // Update the index to the next movie, or loop back to the first one
   currentIndex = (currentIndex + 1) % featuredMovies.length;
 }
 
@@ -49,6 +40,7 @@ async function fetchTrending(type) {
 
 async function fetchTrendingAnime() {
   let allResults = [];
+  // Fetch from multiple pages to get more anime (max 3 pages for demo)
   for (let page = 1; page <= 3; page++) {
     const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
     const data = await res.json();
@@ -62,21 +54,16 @@ async function fetchTrendingAnime() {
 
 // Function to display the banner (featured movie/show) and set currentItem
 function displayBanner(item) {
-  const banner = document.getElementById('banner');
-  const overlay = banner.querySelector('.overlay');
-  banner.style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
+  document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
   document.getElementById('banner-title').textContent = item.title || item.name;
   document.getElementById('banner-description').textContent = item.overview || 'No description available.';
+  // Set the currentItem to this movie/show
   currentItem = item;
-
-  // Trigger animation
-  overlay.classList.remove('animate-slide');
-  void overlay.offsetWidth;
-  overlay.classList.add('animate-slide');
-
-  document.getElementById('play-btn').style.display = 'inline-block';
+  // Display the Play button (it might be hidden initially)
+  document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
 }
 
+// Display the list of movies, TV shows, or anime
 function displayList(items, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
@@ -89,6 +76,7 @@ function displayList(items, containerId) {
   });
 }
 
+// Function to show details of a selected movie/show
 function showDetails(item) {
   currentItem = item;
   document.getElementById('modal-title').textContent = item.title || item.name;
@@ -99,6 +87,7 @@ function showDetails(item) {
   document.getElementById('modal').style.display = 'flex';
 }
 
+// Change the server for video embedding (e.g., Vidsrc, Videasy)
 function changeServer() {
   const server = document.getElementById('server').value;
   const type = currentItem.media_type === "movie" ? "movie" : "tv";
@@ -115,21 +104,25 @@ function changeServer() {
   document.getElementById('modal-video').src = embedURL;
 }
 
+// Close the modal
 function closeModal() {
   document.getElementById('modal').style.display = 'none';
   document.getElementById('modal-video').src = '';
 }
 
+// Open the search modal
 function openSearchModal() {
   document.getElementById('search-modal').style.display = 'flex';
   document.getElementById('search-input').focus();
 }
 
+// Close the search modal
 function closeSearchModal() {
   document.getElementById('search-modal').style.display = 'none';
   document.getElementById('search-results').innerHTML = '';
 }
 
+// Search TMDB for movies/shows
 async function searchTMDB() {
   const query = document.getElementById('search-input').value;
   const resultsContainer = document.getElementById('search-results');
@@ -142,13 +135,17 @@ async function searchTMDB() {
   const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`);
   const data = await res.json();
 
+  // Clear previous search results
   resultsContainer.innerHTML = '';
 
+  // Show search results
   data.results.forEach(item => {
     if (!item.poster_path) return;
     const img = document.createElement('img');
     img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
+
+    // When a result is clicked, redirect to its detailed page
     img.onclick = () => {
       window.location.href = `watch.html?id=${item.id}&server=vidsrc.cc&type=${item.media_type}`;
     };
@@ -156,26 +153,33 @@ async function searchTMDB() {
   });
 }
 
+// Initialize and fetch trending data (movies, TV shows, anime)
 async function init() {
   const movies = await fetchTrending('movie');
   const tvShows = await fetchTrending('tv');
   const anime = await fetchTrendingAnime();
 
-  displayBanner(movies[Math.floor(Math.random() * movies.length)]);
+  displayBanner(movies[Math.floor(Math.random() * movies.length)]); // Display random featured movie/show
   displayList(movies, 'movies-list');
   displayList(tvShows, 'tvshows-list');
   displayList(anime, 'anime-list');
-  fetchFeaturedMovies();
+  fetchFeaturedMovies(); // Call the fetchFeaturedMovies function to get movies for the rotation
 }
 
+// Run the init function when the page loads
 init();
-setInterval(changeFeaturedMovie, 10000);
+
+// Set an interval to change the featured movie every 10 seconds
+setInterval(changeFeaturedMovie, 10000); // 10000 milliseconds = 10 seconds
+
+// Attach search functionality to input field
 document.getElementById('search-input').addEventListener('input', searchTMDB);
 
-window.onload = function () {
+// Check if user is logged in
+window.onload = function() {
   const username = localStorage.getItem('username');
   if (!username) {
-    window.location.href = 'login.html';
+    window.location.href = 'login.html'; // Redirect if user is not logged in
   } else {
     document.getElementById('welcome-message').innerText = `Welcome, ${username}`;
   }
