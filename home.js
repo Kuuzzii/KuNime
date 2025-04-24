@@ -10,9 +10,6 @@ function goToMoviePage() {
   const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
   const server = document.getElementById('server').value; // Get the selected server
 
-  // Hide the video player (remove the video when the "Watch" button is clicked)
-  document.getElementById('modal-video').style.display = 'none';
-
   // Redirect to the movie page with appropriate parameters
   window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
 }
