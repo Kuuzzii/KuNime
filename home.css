@@ -83,28 +83,6 @@ body {
   background-color: #e0394f;
 }
 
-/* Search Results */
-#search-results {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-#search-results img {
-  width: 150px; /* Match the size of movie poster images */
-  height: 225px; /* Make sure the height matches for better consistency */
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-#search-results img:hover {
-  transform: scale(1.08);
-  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
-}
-
 /* Banner */
 .banner {
   height: 50vh;
@@ -144,23 +122,6 @@ body {
 }
 
 .play-btn:hover {
-  background-color: #e0394f; /* Darker red on hover */
-}
-
-/* Watch Button */
-.watch-btn {
-  background-color: #ff4757;
-  color: white;
-  font-size: 18px;
-  padding: 12px 30px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 15px;
-}
-
-.watch-btn:hover {
   background-color: #e0394f; /* Darker red on hover */
 }
 
