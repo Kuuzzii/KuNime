@@ -35,14 +35,18 @@ async function fetchTrendingAnime() {
 function displayList(items, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
-  if (items.length === 0) {
-    container.innerHTML = '<p>No content available.</p>';
-    return;
-  }
   items.forEach(item => {
     const img = document.createElement('img');
     img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
+
+    // Add the click event to redirect to watch.html
+    img.onclick = () => {
+      const type = item.media_type === 'movie' ? 'movie' : 'tv';
+      const server = 'vidsrc.cc'; // Default server
+      window.location.href = `watch.html?id=${item.id}&server=${server}&type=${type}`;
+    };
+
     container.appendChild(img);
   });
 }
