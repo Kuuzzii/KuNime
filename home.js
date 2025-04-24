@@ -5,13 +5,10 @@ let currentItem; // Global variable to hold the currently selected movie/show
 
 // Redirect to the dedicated watch page
 function goToMoviePage() {
-  // Get the movie/show id from the currentItem
   const movieId = currentItem.id;
-  const type = currentItem.media_type === "movie" ? "movie" : "tv"; // Determine if it's a movie or TV show
-  const server = 'vidsrc.cc'; // Default to 'vidsrc.cc' as the server
-
-  // Redirect to the watch page with the correct query parameters
-  window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`;
+  const type = currentItem.media_type === 'movie' ? 'movie' : 'tv'; // Determine if it's a movie or TV show
+  const server = 'vidsrc.cc'; // Default server
+  window.location.href = `watch.html?id=${movieId}&server=${server}&type=${type}`; // Redirect to watch.html
 }
 
 // Fetch Trending Movies/TV Shows/Anime
@@ -42,11 +39,7 @@ function displayBanner(item) {
   document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
   document.getElementById('banner-title').textContent = item.title || item.name;
   document.getElementById('banner-description').textContent = item.overview || 'No description available.';
-
-  // Set the currentItem to this movie/show
-  currentItem = item;
-
-  // Display the Play button (it might be hidden initially)
+  currentItem = item; // Set the current item
   document.getElementById('play-btn').style.display = 'inline-block'; // Ensure Play button is visible
 }
 
@@ -70,69 +63,12 @@ function showDetails(item) {
   document.getElementById('modal-description').textContent = item.overview || 'No description available.';
   document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
   document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
-  changeServer();
   document.getElementById('modal').style.display = 'flex';
-}
-
-// Change the server for video embedding (e.g., Vidsrc, Videasy)
-function changeServer() {
-  const server = document.getElementById('server').value;
-  const type = currentItem.media_type === "movie" ? "movie" : "tv";
-  let embedURL = "";
-
-  if (server === "vidsrc.cc") {
-    embedURL = `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
-  } else if (server === "vidsrc.me") {
-    embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
-  } else if (server === "player.videasy.net") {
-    embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
-  }
-
-  document.getElementById('modal-video').src = embedURL;
 }
 
 // Close the modal
 function closeModal() {
   document.getElementById('modal').style.display = 'none';
-  document.getElementById('modal-video').src = '';
-}
-
-// Open the search modal
-function openSearchModal() {
-  document.getElementById('search-modal').style.display = 'flex';
-  document.getElementById('search-input').focus();
-}
-
-// Close the search modal
-function closeSearchModal() {
-  document.getElementById('search-modal').style.display = 'none';
-  document.getElementById('search-results').innerHTML = '';
-}
-
-// Search TMDB for movies/shows
-async function searchTMDB() {
-  const query = document.getElementById('search-input').value;
-  if (!query.trim()) {
-    document.getElementById('search-results').innerHTML = '';
-    return;
-  }
-
-  const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`);
-  const data = await res.json();
-
-  const container = document.getElementById('search-results');
-  container.innerHTML = '';
-  data.results.forEach(item => {
-    if (!item.poster_path) return;
-    const img = document.createElement('img');
-    img.src = `${IMG_URL}${item.poster_path}`;
-    img.alt = item.title || item.name;
-    img.onclick = () => {
-      closeSearchModal();
-      showDetails(item);
-    };
-    container.appendChild(img);
-  });
 }
 
 // Initialize and fetch trending data (movies, TV shows, anime)
