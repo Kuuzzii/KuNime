@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Watch Movie</title>
+  <title>Watch Movie - KuNime</title>
   <link rel="stylesheet" href="watch.css">
   <script defer src="watch.js"></script>
 </head>
@@ -13,34 +13,35 @@
       <img src="kunime-logo.png" alt="KuNime Logo">
       <span>KuNime</span>
     </div>
-    <a href="javascript:goBack()" class="back-btn">&larr; Back</a>
+    <button class="back-button" onclick="goBack()">&#8592; Back</button>
   </header>
 
-  <main>
-    <section class="movie-details">
-      <div class="movie-backdrop" id="movie-backdrop"></div>
-      <div class="movie-info">
+  <main class="movie-container">
+    <div class="movie-backdrop" id="movie-backdrop">
+      <div class="movie-details">
         <div class="movie-poster">
-          <img id="movie-poster" alt="Movie Poster">
+          <img id="movie-poster" src="" alt="Movie Poster">
         </div>
-        <div class="movie-meta">
+        <div class="movie-info">
           <h1 id="movie-title"></h1>
-          <p id="movie-release-date"></p>
-          <p id="movie-runtime"></p>
-          <div id="movie-genres" class="genres"></div>
+          <p class="movie-meta">
+            <span id="movie-release-date"></span> • 
+            <span id="movie-runtime"></span>
+          </p>
+          <div id="movie-genres" class="movie-genres"></div>
           <p id="movie-overview"></p>
-          <div class="action-buttons">
-            <button class="play-btn" onclick="playMovie()">Play</button>
-            <button class="wishlist-btn">+ Add to wishlist</button>
-            <button class="download-btn">⇩ Download</button>
+          <div class="movie-actions">
+            <button class="action-btn play-btn" onclick="playMovie()">&#9658; Play</button>
+            <button class="action-btn watchlist-btn">+ Add to watchlist</button>
+            <button class="action-btn download-btn">&#8681; Download</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="video-container">
+    <div class="video-container">
       <iframe id="movie-video" frameborder="0" allowfullscreen></iframe>
-    </section>
+    </div>
   </main>
 
   <footer class="footer">
