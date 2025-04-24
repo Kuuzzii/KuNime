@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="home.css" />
   <script defer src="home.js"></script>
   <style>
-    /* Style to place the ad beside the video player */
+    /* Fix layout issues */
     .video-container {
       display: flex;
       gap: 10px;
@@ -18,7 +18,11 @@
     }
     .ad-container {
       flex: 1;
-      display: none; /* Initially hide the ad */
+      display: none; /* Ad is initially hidden */
+    }
+    /* Ensure other sections remain visible */
+    .container, .row {
+      display: block;
     }
   </style>
 </head>
@@ -86,12 +90,16 @@
   </footer>
 
   <script>
-    // JavaScript to dynamically show the ad when the video starts playing
+    // Ensure the ad only appears when the video starts playing
     const videoPlayer = document.getElementById('video-player');
     const adContainer = document.getElementById('ad-container');
 
     videoPlayer.addEventListener('play', () => {
       adContainer.style.display = 'block'; // Show the ad when the video starts
+    });
+
+    videoPlayer.addEventListener('pause', () => {
+      adContainer.style.display = 'none'; // Optionally hide the ad when the video pauses
     });
   </script>
 </body>
