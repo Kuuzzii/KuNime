@@ -16,10 +16,34 @@
   </header>
 
   <!-- Search Bar Section -->
-  <div class="search-bar-container">
-    <input type="text" id="search-bar" placeholder="Search for movies or TV shows..." oninput="performSearch()" />
-    <div id="search-results" class="search-results"></div>
+ <header class="navbar">
+  <div class="logo">
+    <img src="kunime-logo.png" alt="KuNimeTV Logo" />
+    <span>KunimeTV</span>
   </div>
+
+  <form id="search-form" onsubmit="event.preventDefault(); performSearch();">
+    <input
+      type="text"
+      id="search-bar"
+      placeholder="Search for anime..."
+      autocomplete="off"
+      aria-label="Search for anime"
+      oninput="performSearch()"
+    />
+    <button type="submit" class="search-btn" aria-label="Search">
+      &#9658;
+    </button>
+  </form>
+
+  <nav class="nav-links">
+    <a href="#" class="active">Anime</a>
+    <a href="#">Popular</a>
+    <a href="#">18+</a>
+  </nav>
+</header>
+
+<div id="search-results" class="search-results"></div>
 
   <!-- Ad Integration -->
   <div class="ad-container" style="margin: 20px 0; text-align: center;">
