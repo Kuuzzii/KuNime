@@ -248,3 +248,119 @@ body {
 .footer-links a:hover {
   text-decoration: underline;
 }
+/* --- Navbar Container --- */
+.navbar {
+  background: #121212;
+  padding: 15px 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border-bottom: 2px solid #e91e63; /* pink underline */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* --- Logo --- */
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.navbar .logo img {
+  height: 45px;
+  border-radius: 6px;
+}
+
+.navbar .logo span {
+  font-size: 24px;
+  font-weight: 700;
+  color: #e91e63; /* bright pink color */
+}
+
+/* --- Search Form --- */
+#search-form {
+  display: flex;
+  flex-grow: 1;
+  max-width: 400px;
+  border: 2px solid #e91e63;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+#search-form input {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  color: #fff;
+  padding: 8px 15px;
+  font-size: 16px;
+  outline: none;
+  font-weight: 400;
+}
+
+#search-form input::placeholder {
+  color: #e91e63;
+  font-weight: 500;
+}
+
+#search-form .search-btn {
+  background-color: #e91e63;
+  border: none;
+  color: white;
+  padding: 0 16px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+#search-form .search-btn:hover {
+  background-color: #b71c45; /* darker pink */
+}
+
+/* --- Navigation Links --- */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  font-weight: 600;
+}
+
+.nav-links a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #e91e63;
+  font-weight: 700;
+}
+
+/* --- Search Results adjustment --- */
+.search-results {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+  padding: 0 40px;
+}
+
+/* Responsive adjustment: on small screens the nav links hide */
+@media (max-width: 700px) {
+  .nav-links {
+    display: none;
+  }
+  #search-form {
+    max-width: 100%;
+  }
+}
